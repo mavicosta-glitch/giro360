@@ -78,14 +78,14 @@ export function AdminLoginScreen({
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-100 px-4 py-12">
-      <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#EAF0F2] px-4 py-12">
+      <div className="w-full max-w-md rounded-lg border border-[#123B50]/15 border-t-4 border-t-[#D6A843] bg-white p-6 shadow-sm sm:p-8">
         <div className="flex flex-col items-center text-center">
           <BrandLogo />
-          <h1 className="mt-4 font-display text-xl font-black text-[#05226B]">
+          <h1 className="mt-4 font-display text-xl font-black text-[#123B50]">
             Acesso ao Painel Editorial
           </h1>
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[#263746]/75">
             Autenticação segura via Supabase Auth & Row-Level Security (RLS).
           </p>
         </div>
@@ -93,10 +93,10 @@ export function AdminLoginScreen({
         {needsDbSetup && (
           <div
             role="alert"
-            className="mt-5 flex items-start gap-2.5 rounded-md border border-amber-300 bg-amber-50 p-3.5 text-xs text-amber-900"
+            className="mt-5 flex items-start gap-2.5 rounded-md border border-[#D6A843]/60 bg-[#EAF0F2] p-3.5 text-xs text-[#123B50]"
           >
             <AlertTriangle
-              className="mt-0.5 h-4 w-4 shrink-0 text-amber-600"
+              className="mt-0.5 h-4 w-4 shrink-0 text-[#D6A843]"
               aria-hidden="true"
             />
             <div>
@@ -110,7 +110,7 @@ export function AdminLoginScreen({
           </div>
         )}
 
-        <div className="mt-6 grid grid-cols-2 rounded-md border border-slate-200 bg-slate-100 p-1 text-xs font-bold">
+        <div className="mt-6 grid grid-cols-2 rounded-md border border-[#123B50]/15 bg-[#EAF0F2] p-1 text-xs font-bold">
           <button
             type="button"
             onClick={() => {
@@ -119,8 +119,8 @@ export function AdminLoginScreen({
             }}
             className={`rounded py-2 transition ${
               mode === "login"
-                ? "bg-white text-[#05226B] shadow-2xs"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-[#123B50] text-[#D6A843] shadow-2xs"
+                : "text-[#263746] hover:text-[#123B50]"
             }`}
           >
             Entrar
@@ -133,8 +133,8 @@ export function AdminLoginScreen({
             }}
             className={`rounded py-2 transition ${
               mode === "signup"
-                ? "bg-white text-[#05226B] shadow-2xs"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-[#123B50] text-[#D6A843] shadow-2xs"
+                : "text-[#263746] hover:text-[#123B50]"
             }`}
           >
             Primeiro Acesso
@@ -153,10 +153,10 @@ export function AdminLoginScreen({
         {info && (
           <div
             role="status"
-            className="mt-4 flex items-start gap-2 rounded-md border border-emerald-300 bg-emerald-50 px-3.5 py-2.5 text-xs font-semibold text-emerald-900"
+            className="mt-4 flex items-start gap-2 rounded-md border border-[#123B50]/20 bg-[#EAF0F2] px-3.5 py-2.5 text-xs font-semibold text-[#123B50]"
           >
             <CheckCircle2
-              className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
+              className="mt-0.5 h-4 w-4 shrink-0 text-[#123B50]"
               aria-hidden="true"
             />
             <span>{info}</span>
@@ -168,7 +168,7 @@ export function AdminLoginScreen({
             <div>
               <label
                 htmlFor="admin-fullname"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Nome Completo
               </label>
@@ -179,7 +179,7 @@ export function AdminLoginScreen({
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Ex: Editor-Chefe BA Infoco"
-                className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+                className="mt-1 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
               />
             </div>
           )}
@@ -187,7 +187,7 @@ export function AdminLoginScreen({
           <div>
             <label
               htmlFor="admin-email"
-              className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+              className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
             >
               E-mail Administrativo
             </label>
@@ -199,14 +199,14 @@ export function AdminLoginScreen({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="admin@bainfoco.com.br"
-              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+              className="mt-1 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
             />
           </div>
 
           <div>
             <label
               htmlFor="admin-password"
-              className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+              className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
             >
               Senha
             </label>
@@ -221,14 +221,14 @@ export function AdminLoginScreen({
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Mínimo 6 caracteres"
-              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+              className="mt-1 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="flex w-full items-center justify-center gap-2 rounded-md bg-[#05226B] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#082F8A] disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-md bg-[#123B50] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#263746] disabled:opacity-60"
           >
             {loading ? (
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -243,14 +243,14 @@ export function AdminLoginScreen({
           </button>
         </form>
 
-        <div className="mt-5 rounded-md border border-slate-200 bg-slate-50 p-3 text-[11px] leading-relaxed text-slate-600">
+        <div className="mt-5 rounded-md border border-[#123B50]/12 bg-[#EAF0F2] p-3 text-[11px] leading-relaxed text-[#263746]">
           <strong>Dica de Primeiro Acesso:</strong> o primeiro usuário criado no projeto é promovido automaticamente para <code className="font-mono font-semibold">admin</code>. Caso a confirmação de e-mail esteja ativa, confirme pelo link recebido ou marque <em>Auto Confirm User</em> em <em>Authentication → Users</em> no painel do Supabase.
         </div>
 
         <div className="mt-5 text-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#05226B] hover:underline"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#123B50] hover:text-[#263746] hover:underline"
           >
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
             Voltar para a Capa do Portal

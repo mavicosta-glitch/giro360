@@ -67,7 +67,7 @@ function mapRowToArticle(row: ArticleJoinedRow): Article {
     categoryId: row.category_id,
     categoryName: cat?.name ?? "Geral",
     categorySlug: cat?.slug ?? "geral",
-    categoryColor: cat?.color ?? "#05226B",
+    categoryColor: cat?.color ?? "#123B50",
     authorName: row.author_name,
     authorRole: row.author_role ?? "Redação",
     status: row.status,

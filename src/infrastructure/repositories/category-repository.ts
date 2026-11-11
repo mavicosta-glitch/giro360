@@ -34,7 +34,7 @@ function mapRowToCategory(row: CategoryRow): Category {
     name: row.name,
     slug: row.slug,
     description: row.description ?? "",
-    color: row.color || "#05226B",
+    color: row.color || "#123B50",
     displayOrder: Number(row.display_order ?? 0),
     showInMenu: Boolean(row.show_in_menu),
     createdAt: row.created_at,
@@ -141,7 +141,7 @@ export class CategoryRepository {
         name: dto.name.trim(),
         slug: baseSlug,
         description: (dto.description ?? "").trim(),
-        color: dto.color || "#05226B",
+        color: dto.color || "#123B50",
         display_order: dto.displayOrder ?? 0,
         show_in_menu: dto.showInMenu ?? true,
       })

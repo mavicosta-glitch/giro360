@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS public.categories (
   name text NOT NULL,
   slug text NOT NULL UNIQUE,
   description text NOT NULL DEFAULT '',
-  color text NOT NULL DEFAULT '#05226B' CHECK (color ~ '^#[0-9A-Fa-f]{6}$'),
+  color text NOT NULL DEFAULT '#123B50' CHECK (color ~ '^#[0-9A-Fa-f]{6}$'),
   display_order integer NOT NULL DEFAULT 0,
   show_in_menu boolean NOT NULL DEFAULT true,
   created_at timestamptz NOT NULL DEFAULT now(),
@@ -459,19 +459,19 @@ CREATE POLICY "ba_infoco_news_media_admin_delete"
 
 INSERT INTO public.categories (name, slug, description, color, display_order, show_in_menu)
 VALUES
-  ('Agricultura', 'agricultura', 'Safra baiana, agronegócio, exportações e inovações no campo.', '#15803D', 1, true),
-  ('Animais', 'animais', 'Bem-estar animal, fauna silvestre e campanhas de adoção na Bahia.', '#0F766E', 2, true),
-  ('Bahia', 'bahia', 'Notícias de Salvador, Região Metropolitana e interior do estado.', '#05226B', 3, true),
-  ('Brasil', 'brasil', 'Política nacional, programas sociais e decisões de Brasília.', '#1D4ED8', 4, true),
-  ('Cultura', 'cultura', 'Agenda cultural, patrimônio histórico, música e artes da Bahia.', '#7E22CE', 5, true),
-  ('Economia', 'economia', 'Mercado, indústria, portos, comércio e finanças pessoais.', '#B45309', 6, true),
-  ('Entretenimento', 'entretenimento', 'Cinema, streaming, festivais e programação de lazer.', '#BE185D', 7, true),
-  ('Esportes', 'esportes', 'Futebol baiano, Brasileirão, Seleção e modalidades olímpicas.', '#C80A14', 8, true),
-  ('Famosos', 'famosos', 'Bastidores da TV, celebridades e eventos pelo Brasil.', '#DB2777', 9, true),
-  ('Hotelaria', 'hotelaria', 'Turismo, rede hoteleira, resorts e ocupação no litoral baiano.', '#0369A1', 10, true),
-  ('Meio Ambiente', 'meio-ambiente', 'Sustentabilidade, preservação costeira e energias limpas.', '#166534', 11, true),
-  ('Mundo', 'mundo', 'Geopolítica, tecnologia global e principais fatos internacionais.', '#334155', 12, true),
-  ('Polícia', 'policia', 'Segurança pública, operações integradas e trânsito nas rodovias.', '#991B1B', 13, true)
+  ('Agricultura', 'agricultura', 'Safra baiana, agronegócio, exportações e inovações no campo.', '#1F5E5B', 1, true),
+  ('Animais', 'animais', 'Bem-estar animal, fauna silvestre e campanhas de adoção na Bahia.', '#1A4D5E', 2, true),
+  ('Bahia', 'bahia', 'Notícias de Salvador, Região Metropolitana e interior do estado.', '#123B50', 3, true),
+  ('Brasil', 'brasil', 'Política nacional, programas sociais e decisões de Brasília.', '#2E5266', 4, true),
+  ('Cultura', 'cultura', 'Agenda cultural, patrimônio histórico, música e artes da Bahia.', '#9E7622', 5, true),
+  ('Economia', 'economia', 'Mercado, indústria, portos, comércio e finanças pessoais.', '#7C5D1B', 6, true),
+  ('Entretenimento', 'entretenimento', 'Cinema, streaming, festivais e programação de lazer.', '#385166', 7, true),
+  ('Esportes', 'esportes', 'Futebol baiano, Brasileirão, Seleção e modalidades olímpicas.', '#123B50', 8, true),
+  ('Famosos', 'famosos', 'Bastidores da TV, celebridades e eventos pelo Brasil.', '#8F6A1E', 9, true),
+  ('Hotelaria', 'hotelaria', 'Turismo, rede hoteleira, resorts e ocupação no litoral baiano.', '#1E4E68', 10, true),
+  ('Meio Ambiente', 'meio-ambiente', 'Sustentabilidade, preservação costeira e energias limpas.', '#1F5E5B', 11, true),
+  ('Mundo', 'mundo', 'Geopolítica, tecnologia global e principais fatos internacionais.', '#263746', 12, true),
+  ('Polícia', 'policia', 'Segurança pública, operações integradas e trânsito nas rodovias.', '#0E2D3D', 13, true)
 ON CONFLICT (slug) DO NOTHING;
 
 INSERT INTO public.articles (

@@ -4,12 +4,18 @@
   --font-sans: "Inter", "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: "Plus Jakarta Sans", "Inter", "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  --color-brand-navy: #05226b;
-  --color-brand-navy-dark: #031649;
-  --color-brand-navy-light: #0a349c;
-  --color-brand-red: #c80a14;
-  --color-brand-red-hover: #a60710;
-  --color-surface-muted: #f3f4f6;
+  --color-brand-petrol: #123b50;
+  --color-brand-gold: #d6a843;
+  --color-brand-gold-hover: #c29534;
+  --color-brand-slate: #263746;
+  --color-surface-ice: #eaf0f2;
+
+  --color-brand-navy: #123b50;
+  --color-brand-navy-dark: #263746;
+  --color-brand-navy-light: #263746;
+  --color-brand-red: #d6a843;
+  --color-brand-red-hover: #c29534;
+  --color-surface-muted: #eaf0f2;
 }
 
 @layer base {
@@ -19,7 +25,7 @@
 
   body {
     background-color: #ffffff;
-    color: #111827;
+    color: #263746;
     font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -27,7 +33,7 @@
 
   /* Acessibilidade: destaque nítido para navegação por teclado */
   :focus-visible {
-    outline: 2px solid #c80a14;
+    outline: 2px solid #d6a843;
     outline-offset: 2px;
   }
 }
@@ -47,7 +53,7 @@
   left: -9999px;
   top: 0;
   z-index: 100;
-  background-color: #05226b;
+  background-color: #123b50;
   color: #ffffff;
   padding: 0.75rem 1.25rem;
   font-weight: 700;

@@ -19,31 +19,31 @@ export function SubscriberManager({
   return (
     <section
       aria-labelledby="subs-heading"
-      className="rounded-md border border-slate-200 bg-white shadow-2xs"
+      className="rounded-md border border-[#123B50]/15 bg-white shadow-2xs"
     >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-5 py-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#123B50]/15 px-5 py-4">
         <div>
           <h2
             id="subs-heading"
-            className="flex items-center gap-2 font-display text-base font-black text-slate-900"
+            className="flex items-center gap-2 font-display text-base font-black text-[#123B50]"
           >
-            <BellRing className="h-4 w-4 text-[#C80A14]" aria-hidden="true" />
+            <BellRing className="h-4 w-4 text-[#D6A843]" aria-hidden="true" />
             Inscritos no Plantão BA Infoco ({subscribers.length})
           </h2>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[#263746]/70">
             Leitores cadastrados via widget da barra lateral com proteção RLS (somente administradores).
           </p>
         </div>
       </div>
 
       {subscribers.length === 0 ? (
-        <div className="px-6 py-14 text-center text-sm text-slate-500">
+        <div className="px-6 py-14 text-center text-sm text-[#263746]/70">
           Nenhum leitor inscrito na newsletter ainda.
         </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-600">
+            <thead className="border-b border-[#123B50]/15 bg-[#EAF0F2] text-[11px] font-bold uppercase tracking-wider text-[#123B50]">
               <tr>
                 <th className="px-4 py-3">E-mail</th>
                 <th className="px-4 py-3">Status</th>
@@ -51,24 +51,24 @@ export function SubscriberManager({
                 <th className="px-4 py-3 text-right">Ações</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#EAF0F2]">
               {subscribers.map((sub) => (
-                <tr key={sub.id} className="hover:bg-slate-50/70">
-                  <td className="px-4 py-3 font-medium text-slate-900">
+                <tr key={sub.id} className="hover:bg-[#EAF0F2]/55">
+                  <td className="px-4 py-3 font-medium text-[#123B50]">
                     <span className="inline-flex items-center gap-2">
                       <Mail
-                        className="h-3.5 w-3.5 text-slate-400"
+                        className="h-3.5 w-3.5 text-[#D6A843]"
                         aria-hidden="true"
                       />
                       {sub.email}
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700">
+                    <span className="rounded-full bg-[#123B50] px-2.5 py-0.5 text-[11px] font-bold text-[#D6A843]">
                       {sub.status === "active" ? "Ativo" : "Inativo"}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-xs text-slate-500">
+                  <td className="px-4 py-3 text-xs text-[#263746]/70">
                     {formatPtBrDateTime(sub.createdAt)}
                   </td>
                   <td className="px-4 py-3 text-right">

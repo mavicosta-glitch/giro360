@@ -11,24 +11,24 @@ const THEME_STYLES: Record<
   { bg: string; accent: string; badge: string }
 > = {
   "salvador-blue": {
-    bg: "bg-gradient-to-r from-[#041E68] via-[#0B3AA4] to-[#041E68]",
-    accent: "text-[#FFD400]",
-    badge: "bg-white/15 text-white border-white/25",
+    bg: "bg-gradient-to-r from-[#123B50] via-[#263746] to-[#123B50]",
+    accent: "text-[#D6A843]",
+    badge: "bg-[#D6A843]/15 text-[#EAF0F2] border-[#D6A843]/45",
   },
   "agro-green": {
-    bg: "bg-gradient-to-r from-[#0E4D25] via-[#15803D] to-[#0E4D25]",
-    accent: "text-[#FDE047]",
-    badge: "bg-white/15 text-white border-white/25",
+    bg: "bg-gradient-to-r from-[#123B50] via-[#1B4A58] to-[#263746]",
+    accent: "text-[#D6A843]",
+    badge: "bg-white/10 text-[#EAF0F2] border-[#D6A843]/35",
   },
   "commerce-gold": {
-    bg: "bg-gradient-to-r from-[#1E293B] via-[#0F172A] to-[#1E293B]",
-    accent: "text-[#FBBF24]",
-    badge: "bg-[#FBBF24]/15 text-[#FDE68A] border-[#FBBF24]/30",
+    bg: "bg-gradient-to-r from-[#263746] via-[#123B50] to-[#263746]",
+    accent: "text-[#D6A843]",
+    badge: "bg-[#D6A843] text-[#123B50] border-[#D6A843]",
   },
   "institutional-navy": {
-    bg: "bg-gradient-to-br from-[#031649] via-[#05226B] to-[#0A349C]",
-    accent: "text-[#FFD400]",
-    badge: "bg-white/15 text-white border-white/25",
+    bg: "bg-gradient-to-br from-[#263746] via-[#123B50] to-[#263746]",
+    accent: "text-[#D6A843]",
+    badge: "bg-[#EAF0F2]/15 text-[#EAF0F2] border-[#D6A843]/40",
   },
 };
 

@@ -59,14 +59,14 @@ export function SidebarWidgets({
       {/* Widget Mais Lidas */}
       <section
         aria-labelledby="most-read-heading"
-        className="rounded-sm border border-slate-200 bg-white p-4 shadow-2xs"
+        className="rounded-sm border border-[#123B50]/12 bg-white p-4 shadow-2xs"
       >
-        <div className="flex items-center justify-between border-b-2 border-[#05226B] pb-2.5">
+        <div className="flex items-center justify-between border-b-2 border-[#123B50] pb-2.5">
           <h2
             id="most-read-heading"
-            className="flex items-center gap-2 font-display text-sm font-black uppercase tracking-wider text-[#05226B]"
+            className="flex items-center gap-2 font-display text-sm font-black uppercase tracking-wider text-[#123B50]"
           >
-            <Flame className="h-4 w-4 text-[#C80A14]" aria-hidden="true" />
+            <Flame className="h-4 w-4 text-[#D6A843]" aria-hidden="true" />
             Mais Lidas
           </h2>
           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
@@ -79,16 +79,16 @@ export function SidebarWidgets({
             <li key={item.id} className="py-3 first:pt-3 last:pb-1">
               <Link
                 href={`/noticia/${item.slug}`}
-                className="group flex items-start gap-3 rounded-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C80A14]"
+                className="group flex items-start gap-3 rounded-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D6A843]"
               >
                 <span
                   aria-hidden="true"
                   className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xs font-display text-sm font-black ${
                     idx === 0
-                      ? "bg-[#C80A14] text-white"
+                      ? "bg-[#D6A843] text-[#123B50]"
                       : idx < 3
-                        ? "bg-[#05226B] text-white"
-                        : "bg-slate-100 text-slate-700"
+                        ? "bg-[#123B50] text-white"
+                        : "bg-[#EAF0F2] text-[#263746]"
                   }`}
                 >
                   {idx + 1}
@@ -96,11 +96,11 @@ export function SidebarWidgets({
                 <div className="min-w-0 flex-1">
                   <span
                     className="text-[10px] font-extrabold uppercase tracking-wider"
-                    style={{ color: item.categoryColor || "#05226B" }}
+                    style={{ color: item.categoryColor || "#123B50" }}
                   >
                     {item.categoryName}
                   </span>
-                  <h3 className="mt-0.5 line-clamp-2 text-xs font-bold leading-snug text-slate-900 group-hover:text-[#05226B] group-hover:underline sm:text-[13px]">
+                  <h3 className="mt-0.5 line-clamp-2 text-xs font-bold leading-snug text-[#263746] group-hover:text-[#123B50] group-hover:underline sm:text-[13px]">
                     {item.title}
                   </h3>
                   <span className="mt-1 inline-flex items-center gap-1 text-[11px] text-slate-500">
@@ -117,34 +117,34 @@ export function SidebarWidgets({
       {/* Widget Panorama Regional Bahia */}
       <section
         aria-labelledby="panorama-ba-heading"
-        className="rounded-sm border border-slate-200 bg-slate-50 p-4"
+        className="rounded-sm border border-[#123B50]/12 bg-[#EAF0F2] p-4"
       >
         <h2
           id="panorama-ba-heading"
-          className="flex items-center gap-2 border-b border-slate-200 pb-2 font-display text-xs font-black uppercase tracking-wider text-slate-800"
+          className="flex items-center gap-2 border-b border-[#123B50]/15 pb-2 font-display text-xs font-black uppercase tracking-wider text-[#123B50]"
         >
-          <CloudSun className="h-4 w-4 text-[#05226B]" aria-hidden="true" />
+          <CloudSun className="h-4 w-4 text-[#D6A843]" aria-hidden="true" />
           Salvador & Economia Hoje
         </h2>
         <div className="mt-3 grid grid-cols-2 gap-2.5 text-xs">
-          <div className="rounded-xs border border-slate-200 bg-white p-2.5">
-            <p className="text-[10px] font-bold uppercase text-slate-500">
+          <div className="rounded-xs border border-[#123B50]/12 bg-white p-2.5">
+            <p className="text-[10px] font-bold uppercase text-[#263746]/70">
               Salvador (BA)
             </p>
-            <p className="mt-0.5 font-display text-base font-black text-slate-900">
+            <p className="mt-0.5 font-display text-base font-black text-[#123B50]">
               28°C
             </p>
-            <p className="text-[11px] text-slate-600">Sol com brisa costeira</p>
+            <p className="text-[11px] text-[#263746]/80">Sol com brisa costeira</p>
           </div>
-          <div className="rounded-xs border border-slate-200 bg-white p-2.5">
-            <p className="text-[10px] font-bold uppercase text-slate-500">
+          <div className="rounded-xs border border-[#123B50]/12 bg-white p-2.5">
+            <p className="text-[10px] font-bold uppercase text-[#263746]/70">
               Mercado
             </p>
-            <p className="mt-0.5 flex items-center gap-1 font-display text-base font-black text-[#15803D]">
-              <TrendingUp className="h-3.5 w-3.5" aria-hidden="true" />
+            <p className="mt-0.5 flex items-center gap-1 font-display text-base font-black text-[#123B50]">
+              <TrendingUp className="h-3.5 w-3.5 text-[#D6A843]" aria-hidden="true" />
               Agro +7%
             </p>
-            <p className="text-[11px] text-slate-600">Safra Oeste Baiano</p>
+            <p className="text-[11px] text-[#263746]/80">Safra Oeste Baiano</p>
           </div>
         </div>
       </section>
@@ -156,11 +156,11 @@ export function SidebarWidgets({
       {/* Mapa Rápido de Editorias */}
       <section
         aria-labelledby="sidebar-categories-heading"
-        className="rounded-sm border border-slate-200 bg-white p-4"
+        className="rounded-sm border border-[#123B50]/12 bg-white p-4"
       >
         <h2
           id="sidebar-categories-heading"
-          className="border-b border-slate-200 pb-2 font-display text-xs font-black uppercase tracking-wider text-[#05226B]"
+          className="border-b border-[#123B50]/15 pb-2 font-display text-xs font-black uppercase tracking-wider text-[#123B50]"
         >
           Explorar Editorias
         </h2>
@@ -169,7 +169,7 @@ export function SidebarWidgets({
             <Link
               key={cat.id}
               href={`/categoria/${cat.slug}`}
-              className="rounded-xs border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-slate-800 transition-colors hover:border-[#05226B] hover:bg-[#05226B] hover:text-white"
+              className="rounded-xs border border-[#123B50]/15 bg-[#EAF0F2] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-[#263746] transition-colors hover:border-[#123B50] hover:bg-[#123B50] hover:text-[#D6A843]"
             >
               {cat.name}
             </Link>

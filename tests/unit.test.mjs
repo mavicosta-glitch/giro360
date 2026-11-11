@@ -12,6 +12,7 @@ import {
   createCategorySchema,
   newsletterSchema,
 } from "../src/domain/validation/schemas.ts";
+import { getContrastTextColor } from "../src/lib/palette.ts";
 
 test("slugify removes accents, punctuation and normalizes whitespace", () => {
   assert.equal(
@@ -35,7 +36,7 @@ test("formatPtBrDate formats ISO dates in Portuguese", () => {
 test("createCategorySchema validates hex color and name constraints", () => {
   const valid = createCategorySchema.safeParse({
     name: "Tecnologia",
-    color: "#05226B",
+    color: "#123B50",
     displayOrder: 5,
     showInMenu: true,
   });
@@ -127,5 +128,13 @@ test("adminAuthSchema requires valid email and minimum 6-char password", () => {
     password: "123",
   });
   assert.equal(shortPassword.success, false);
+});
+
+test("getContrastTextColor returns readable ink for dark and gold backgrounds", () => {
+  assert.equal(getContrastTextColor("#123B50"), "#FFFFFF");
+  assert.equal(getContrastTextColor("#263746"), "#FFFFFF");
+  assert.equal(getContrastTextColor("#D6A843"), "#123B50");
+  assert.equal(getContrastTextColor("#EAF0F2"), "#123B50");
+  assert.equal(getContrastTextColor("invalid"), "#FFFFFF");
 });
 

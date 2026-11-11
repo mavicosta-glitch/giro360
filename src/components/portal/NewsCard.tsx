@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Clock } from "lucide-react";
 import type { Article } from "@/domain/entities/article";
 import { formatPtBrDate } from "@/lib/formatters";
+import { getContrastTextColor } from "@/lib/palette";
 
 export type NewsCardVariant = "featured" | "grid" | "compact";
 
@@ -22,12 +23,12 @@ export function NewsCard({
 }: NewsCardProps) {
   if (variant === "compact") {
     return (
-      <article className="group border-b border-slate-200 py-3.5 last:border-b-0">
+      <article className="group border-b border-[#EAF0F2] py-3.5 last:border-b-0">
         <Link
           href={`/noticia/${article.slug}`}
-          className="flex items-start gap-3.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C80A14]"
+          className="flex items-start gap-3.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D6A843]"
         >
-          <div className="relative aspect-[16/10] w-28 shrink-0 overflow-hidden rounded-xs bg-slate-100 sm:w-32">
+          <div className="relative aspect-[16/10] w-28 shrink-0 overflow-hidden rounded-xs bg-[#EAF0F2] sm:w-32">
             <Image
               src={article.coverImage}
               alt={article.coverAlt}
@@ -40,11 +41,11 @@ export function NewsCard({
           <div className="min-w-0 flex-1">
             <span
               className="text-[11px] font-extrabold uppercase tracking-wider"
-              style={{ color: article.categoryColor || "#05226B" }}
+              style={{ color: article.categoryColor || "#123B50" }}
             >
               {article.categoryName}
             </span>
-            <h3 className="mt-1 line-clamp-2 font-display text-sm font-bold leading-snug text-slate-900 group-hover:text-[#05226B] group-hover:underline">
+            <h3 className="mt-1 line-clamp-2 font-display text-sm font-bold leading-snug text-[#263746] group-hover:text-[#123B50] group-hover:underline">
               {article.title}
             </h3>
             <time
@@ -65,9 +66,9 @@ export function NewsCard({
       <article className="group flex flex-col overflow-hidden rounded-sm bg-white transition-colors">
         <Link
           href={`/noticia/${article.slug}`}
-          className="flex flex-col focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C80A14]"
+          className="flex flex-col focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D6A843]"
         >
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xs bg-slate-100">
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xs bg-[#EAF0F2]">
             <Image
               src={article.coverImage}
               alt={article.coverAlt}
@@ -81,11 +82,11 @@ export function NewsCard({
           <div className="pt-2.5">
             <span
               className="text-xs font-bold tracking-wide"
-              style={{ color: article.categoryColor || "#05226B" }}
+              style={{ color: article.categoryColor || "#123B50" }}
             >
               {article.categoryName}
             </span>
-            <h2 className="mt-1 line-clamp-3 font-display text-base font-extrabold leading-snug text-slate-950 transition-colors group-hover:text-[#05226B] group-hover:underline">
+            <h2 className="mt-1 line-clamp-3 font-display text-base font-extrabold leading-snug text-[#123B50] transition-colors group-hover:text-[#263746] group-hover:underline">
               {article.title}
             </h2>
             <time
@@ -102,12 +103,12 @@ export function NewsCard({
   }
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-sm border border-slate-200 bg-white shadow-2xs transition-shadow hover:shadow-md">
+    <article className="group flex h-full flex-col overflow-hidden rounded-sm border border-[#123B50]/12 bg-white shadow-2xs transition-shadow hover:shadow-md">
       <Link
         href={`/noticia/${article.slug}`}
-        className="flex h-full flex-col focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C80A14]"
+        className="flex h-full flex-col focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D6A843]"
       >
-        <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#EAF0F2]">
           <Image
             src={article.coverImage}
             alt={article.coverAlt}
@@ -117,8 +118,11 @@ export function NewsCard({
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <span
-            className="absolute left-3 top-3 rounded-xs px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-xs"
-            style={{ backgroundColor: article.categoryColor || "#05226B" }}
+            className="absolute left-3 top-3 rounded-xs px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider shadow-xs"
+            style={{
+              backgroundColor: article.categoryColor || "#123B50",
+              color: getContrastTextColor(article.categoryColor || "#123B50"),
+            }}
           >
             {article.categoryName}
           </span>
@@ -126,11 +130,11 @@ export function NewsCard({
 
         <div className="flex flex-1 flex-col justify-between p-4">
           <div>
-            <h3 className="line-clamp-3 font-display text-base font-extrabold leading-snug text-slate-950 transition-colors group-hover:text-[#05226B] group-hover:underline">
+            <h3 className="line-clamp-3 font-display text-base font-extrabold leading-snug text-[#123B50] transition-colors group-hover:text-[#263746] group-hover:underline">
               {article.title}
             </h3>
             {showExcerpt && (
-              <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-600">
+              <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[#263746]/80">
                 {article.subtitle}
               </p>
             )}

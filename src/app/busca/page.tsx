@@ -32,11 +32,11 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
       <main id="conteudo-principal" className="min-h-screen bg-white py-8">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
-          <header className="mb-6 border-b-2 border-[#05226B] pb-3">
-            <h1 className="font-display text-2xl font-black uppercase tracking-tight text-[#05226B] sm:text-3xl">
+          <header className="mb-6 border-b-2 border-[#123B50] pb-3">
+            <h1 className="font-display text-2xl font-black uppercase tracking-tight text-[#123B50] sm:text-3xl">
               Arquivo & Busca de Notícias
             </h1>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-1 text-sm text-[#263746]/80">
               Encontre matérias publicadas no portal BA Infoco em tempo real.
             </p>
           </header>

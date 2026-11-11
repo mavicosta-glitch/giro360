@@ -70,21 +70,21 @@ export function MobileDrawer({
     >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-[#263746]/70 backdrop-blur-xs transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Drawer Panel */}
       <aside className="relative z-10 flex h-full w-80 max-w-[85vw] flex-col bg-white shadow-2xl">
-        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+        <div className="flex items-center justify-between border-b border-[#EAF0F2] px-5 py-4">
           <BrandLogo compact />
           <button
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
             aria-label="Fechar menu de navegação"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-[#263746] hover:bg-[#EAF0F2] hover:text-[#123B50]"
           >
             <X className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -93,13 +93,13 @@ export function MobileDrawer({
         {/* Busca no Drawer */}
         <form
           onSubmit={handleSearchSubmit}
-          className="border-b border-slate-100 px-4 py-3"
+          className="border-b border-[#EAF0F2] px-4 py-3"
           role="search"
           aria-label="Buscar notícias no portal"
         >
           <div className="relative flex items-center">
             <Search
-              className="pointer-events-none absolute left-3 h-4 w-4 text-slate-400"
+              className="pointer-events-none absolute left-3 h-4 w-4 text-[#263746]/50"
               aria-hidden="true"
             />
             <input
@@ -107,7 +107,7 @@ export function MobileDrawer({
               type="search"
               placeholder="Buscar notícias..."
               aria-label="Termo de busca"
-              className="w-full rounded-lg border border-slate-300 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-500 focus:border-[#05226B] focus:bg-white focus:outline-none"
+              className="w-full rounded-lg border border-[#123B50]/20 bg-[#EAF0F2] py-2 pl-9 pr-3 text-sm text-[#263746] placeholder:text-[#263746]/55 focus:border-[#123B50] focus:bg-white focus:outline-none"
             />
           </div>
         </form>
@@ -117,7 +117,7 @@ export function MobileDrawer({
           aria-label="Editorias do portal"
           className="flex-1 overflow-y-auto px-3 py-4"
         >
-          <p className="px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+          <p className="px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-[#263746]/65">
             Navegação & Editorias
           </p>
           <ul className="space-y-1">
@@ -127,8 +127,8 @@ export function MobileDrawer({
                 onClick={onClose}
                 className={`flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${
                   !activeSlug
-                    ? "bg-[#05226B] text-white"
-                    : "text-slate-800 hover:bg-slate-100"
+                    ? "bg-[#123B50] text-[#D6A843]"
+                    : "text-[#263746] hover:bg-[#EAF0F2] hover:text-[#123B50]"
                 }`}
               >
                 <span className="flex items-center gap-2.5">
@@ -147,8 +147,8 @@ export function MobileDrawer({
                     onClick={onClose}
                     className={`flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${
                       isActive
-                        ? "bg-[#05226B] text-white"
-                        : "text-slate-800 hover:bg-slate-100"
+                        ? "bg-[#123B50] text-[#D6A843]"
+                        : "text-[#263746] hover:bg-[#EAF0F2] hover:text-[#123B50]"
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
@@ -171,13 +171,13 @@ export function MobileDrawer({
         </nav>
 
         {/* Ação Painel Administrativo */}
-        <div className="border-t border-slate-200 bg-slate-50 p-4">
+        <div className="border-t border-[#123B50]/10 bg-[#EAF0F2] p-4">
           <Link
             href="/admin"
             onClick={onClose}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#05226B] px-4 py-2.5 text-sm font-bold text-white shadow-xs transition hover:bg-[#082F8A]"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#123B50] px-4 py-2.5 text-sm font-bold text-white shadow-xs transition hover:bg-[#263746]"
           >
-            <LayoutDashboard className="h-4 w-4" aria-hidden="true" />
+            <LayoutDashboard className="h-4 w-4 text-[#D6A843]" aria-hidden="true" />
             Painel Administrativo
           </Link>
         </div>

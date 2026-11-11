@@ -14,18 +14,9 @@ import {
 import type { Category } from "@/domain/entities/category";
 import type { CreateCategoryInput } from "@/domain/validation/schemas";
 import { slugify } from "@/lib/formatters";
+import { CATEGORY_PRESET_COLORS } from "@/lib/palette";
 
-const COLOR_PRESETS = [
-  "#05226B",
-  "#C80A14",
-  "#15803D",
-  "#1D4ED8",
-  "#7E22CE",
-  "#B45309",
-  "#0F766E",
-  "#BE185D",
-  "#334155",
-];
+const COLOR_PRESETS = CATEGORY_PRESET_COLORS;
 
 interface CategoryManagerProps {
   categories: Category[];
@@ -48,7 +39,7 @@ export function CategoryManager({
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
-  const [color, setColor] = useState("#05226B");
+  const [color, setColor] = useState("#123B50");
   const [displayOrder, setDisplayOrder] = useState(categories.length + 1);
   const [showInMenu, setShowInMenu] = useState(true);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
@@ -59,7 +50,7 @@ export function CategoryManager({
     setName("");
     setSlug("");
     setDescription("");
-    setColor("#05226B");
+    setColor("#123B50");
     setDisplayOrder(categories.length + 1);
     setShowInMenu(true);
     setFormError(null);
@@ -126,12 +117,12 @@ export function CategoryManager({
       {/* Formulário de Criação / Edição */}
       <section
         aria-labelledby="cat-form-heading"
-        className="rounded-md border border-slate-200 bg-white p-5 shadow-2xs lg:col-span-4"
+        className="rounded-md border border-[#123B50]/15 bg-white p-5 shadow-2xs lg:col-span-4"
       >
-        <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div className="flex items-center justify-between border-b border-[#123B50]/15 pb-3">
           <h2
             id="cat-form-heading"
-            className="font-display text-base font-black text-[#05226B]"
+            className="font-display text-base font-black text-[#123B50]"
           >
             {editingId ? "Editar Editoria" : "Nova Editoria"}
           </h2>
@@ -160,7 +151,7 @@ export function CategoryManager({
           <div>
             <label
               htmlFor="cat-name"
-              className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+              className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
             >
               Nome da Editoria *
             </label>
@@ -173,14 +164,14 @@ export function CategoryManager({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ex: Tecnologia, Saúde, Carnaval"
-              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+              className="mt-1 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
             />
           </div>
 
           <div>
             <label
               htmlFor="cat-slug"
-              className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+              className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
             >
               Slug (URL amigável)
             </label>
@@ -190,14 +181,14 @@ export function CategoryManager({
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
               placeholder={slugify(name) || "gerado-automaticamente"}
-              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+              className="mt-1 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
             />
           </div>
 
           <div>
             <label
               htmlFor="cat-desc"
-              className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+              className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
             >
               Descrição (SEO)
             </label>
@@ -208,7 +199,7 @@ export function CategoryManager({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Resumo para meta description da página da editoria..."
-              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+              className="mt-1 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
             />
           </div>
 
@@ -216,7 +207,7 @@ export function CategoryManager({
             <div>
               <label
                 htmlFor="cat-order"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Ordem no Menu
               </label>
@@ -227,14 +218,14 @@ export function CategoryManager({
                 max={999}
                 value={displayOrder}
                 onChange={(e) => setDisplayOrder(Number(e.target.value))}
-                className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+                className="mt-1 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
               />
             </div>
 
             <div>
               <label
                 htmlFor="cat-color"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Cor da Tag
               </label>
@@ -244,7 +235,7 @@ export function CategoryManager({
                   type="color"
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
-                  className="h-9 w-12 cursor-pointer rounded border border-slate-300 bg-white p-0.5"
+                  className="h-9 w-12 cursor-pointer rounded border border-[#123B50]/20 bg-white p-0.5"
                 />
                 <span className="font-mono text-xs text-slate-600">
                   {color}
@@ -263,7 +254,7 @@ export function CategoryManager({
                 aria-label={`Selecionar cor ${preset}`}
                 className={`h-6 w-6 rounded-full border-2 transition-transform hover:scale-110 ${
                   color.toLowerCase() === preset.toLowerCase()
-                    ? "border-slate-950 scale-110"
+                    ? "border-[#123B50] ring-2 ring-[#D6A843] scale-110"
                     : "border-white shadow-xs"
                 }`}
                 style={{ backgroundColor: preset }}
@@ -271,12 +262,12 @@ export function CategoryManager({
             ))}
           </div>
 
-          <label className="flex cursor-pointer items-center gap-2.5 rounded-md border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs font-semibold text-slate-800">
+          <label className="flex cursor-pointer items-center gap-2.5 rounded-md border border-[#123B50]/15 bg-[#EAF0F2] px-3 py-2.5 text-xs font-semibold text-[#123B50]">
             <input
               type="checkbox"
               checked={showInMenu}
               onChange={(e) => setShowInMenu(e.target.checked)}
-              className="h-4 w-4 accent-[#05226B]"
+              className="h-4 w-4 accent-[#123B50]"
             />
             Exibir na barra superior de navegação
           </label>
@@ -284,7 +275,7 @@ export function CategoryManager({
           <button
             type="submit"
             disabled={isMutating}
-            className="flex w-full items-center justify-center gap-2 rounded-md bg-[#05226B] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#082F8A] disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-md bg-[#123B50] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#263746] disabled:opacity-60"
           >
             {isMutating ? (
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -301,17 +292,17 @@ export function CategoryManager({
       {/* Tabela de Categorias Cadastradas */}
       <section
         aria-labelledby="cat-list-heading"
-        className="rounded-md border border-slate-200 bg-white shadow-2xs lg:col-span-8"
+        className="rounded-md border border-[#123B50]/15 bg-white shadow-2xs lg:col-span-8"
       >
-        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+        <div className="flex items-center justify-between border-b border-[#123B50]/15 px-5 py-4">
           <div>
             <h2
               id="cat-list-heading"
-              className="font-display text-base font-black text-slate-900"
+              className="font-display text-base font-black text-[#123B50]"
             >
               Editorias Cadastradas ({categories.length})
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-[#263746]/70">
               A ordem e a visibilidade refletem imediatamente na barra azul superior do portal.
             </p>
           </div>
@@ -319,7 +310,7 @@ export function CategoryManager({
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-600">
+            <thead className="border-b border-[#123B50]/15 bg-[#EAF0F2] text-[11px] font-bold uppercase tracking-wider text-[#123B50]">
               <tr>
                 <th className="px-4 py-3">Ordem</th>
                 <th className="px-4 py-3">Editoria</th>
@@ -328,10 +319,10 @@ export function CategoryManager({
                 <th className="px-4 py-3 text-right">Ações</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#EAF0F2]">
               {categories.map((cat) => (
-                <tr key={cat.id} className="hover:bg-slate-50/70">
-                  <td className="px-4 py-3 font-mono text-xs font-bold text-slate-500">
+                <tr key={cat.id} className="hover:bg-[#EAF0F2]/55">
+                  <td className="px-4 py-3 font-mono text-xs font-bold text-[#263746]/70">
                     #{cat.displayOrder}
                   </td>
                   <td className="px-4 py-3">
@@ -342,14 +333,14 @@ export function CategoryManager({
                         aria-hidden="true"
                       />
                       <div>
-                        <p className="font-bold text-slate-900">{cat.name}</p>
-                        <p className="text-[11px] text-slate-500">
+                        <p className="font-bold text-[#123B50]">{cat.name}</p>
+                        <p className="text-[11px] text-[#263746]/70">
                           /categoria/{cat.slug}
                         </p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-xs font-semibold text-slate-700">
+                  <td className="px-4 py-3 text-xs font-semibold text-[#263746]">
                     {cat.articleCount ?? 0}
                   </td>
                   <td className="px-4 py-3">
@@ -365,8 +356,8 @@ export function CategoryManager({
                       }
                       className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold transition ${
                         cat.showInMenu
-                          ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-                          : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                          ? "bg-[#123B50] text-[#D6A843] hover:bg-[#263746]"
+                          : "bg-[#EAF0F2] text-[#263746] hover:bg-[#D6A843]/25"
                       }`}
                     >
                       {cat.showInMenu ? (
@@ -388,7 +379,7 @@ export function CategoryManager({
                         type="button"
                         onClick={() => startEdit(cat)}
                         aria-label={`Editar editoria ${cat.name}`}
-                        className="rounded p-1.5 text-slate-600 hover:bg-slate-100 hover:text-[#05226B]"
+                        className="rounded p-1.5 text-[#263746] hover:bg-[#EAF0F2] hover:text-[#123B50]"
                       >
                         <Edit3 className="h-4 w-4" aria-hidden="true" />
                       </button>

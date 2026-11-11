@@ -10,6 +10,7 @@ import { JsonLdScript } from "@/components/portal/JsonLdScript";
 import { NewsCard } from "@/components/portal/NewsCard";
 import { ShareButtons } from "@/components/portal/ShareButtons";
 import { SidebarWidgets } from "@/components/portal/SidebarWidgets";
+import { getContrastTextColor } from "@/lib/palette";
 import {
   formatNumberPtBr,
   formatPtBrDateTime,
@@ -104,21 +105,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           {/* Breadcrumb Semântico */}
           <nav
             aria-label="Navegação estrutural"
-            className="mb-5 flex flex-wrap items-center gap-1.5 text-xs font-medium text-slate-600"
+            className="mb-5 flex flex-wrap items-center gap-1.5 text-xs font-medium text-[#263746]/75"
           >
-            <Link href="/" className="hover:text-[#05226B] hover:underline">
+            <Link href="/" className="hover:text-[#123B50] hover:underline">
               Home
             </Link>
-            <ChevronRight className="h-3.5 w-3.5 text-slate-400" aria-hidden="true" />
+            <ChevronRight className="h-3.5 w-3.5 text-[#263746]/40" aria-hidden="true" />
             <Link
               href={`/categoria/${article.categorySlug}`}
               className="font-bold uppercase tracking-wide hover:underline"
-              style={{ color: article.categoryColor || "#05226B" }}
+              style={{ color: article.categoryColor || "#123B50" }}
             >
               {article.categoryName}
             </Link>
-            <ChevronRight className="h-3.5 w-3.5 text-slate-400" aria-hidden="true" />
-            <span className="truncate text-slate-500 max-w-xs sm:max-w-md">
+            <ChevronRight className="h-3.5 w-3.5 text-[#263746]/40" aria-hidden="true" />
+            <span className="truncate text-[#263746]/70 max-w-xs sm:max-w-md">
               {article.title}
             </span>
           </nav>
@@ -129,26 +130,29 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <header>
                 <Link
                   href={`/categoria/${article.categorySlug}`}
-                  className="inline-block rounded-xs px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white"
-                  style={{ backgroundColor: article.categoryColor || "#05226B" }}
+                  className="inline-block rounded-xs px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider"
+                  style={{
+                    backgroundColor: article.categoryColor || "#123B50",
+                    color: getContrastTextColor(article.categoryColor || "#123B50"),
+                  }}
                 >
                   {article.categoryName}
                 </Link>
 
-                <h1 className="mt-3 font-display text-2xl font-black leading-tight tracking-tight text-slate-950 sm:text-4xl">
+                <h1 className="mt-3 font-display text-2xl font-black leading-tight tracking-tight text-[#123B50] sm:text-4xl">
                   {article.title}
                 </h1>
 
-                <p className="mt-3 text-base leading-relaxed text-slate-700 sm:text-lg">
+                <p className="mt-3 text-base leading-relaxed text-[#263746]/90 sm:text-lg">
                   {article.subtitle}
                 </p>
 
-                <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-y border-slate-200 py-3.5">
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-600">
-                    <span className="inline-flex items-center gap-1.5 font-bold text-slate-900">
-                      <User className="h-4 w-4 text-[#05226B]" aria-hidden="true" />
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-y border-[#123B50]/12 py-3.5">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[#263746]/80">
+                    <span className="inline-flex items-center gap-1.5 font-bold text-[#123B50]">
+                      <User className="h-4 w-4 text-[#D6A843]" aria-hidden="true" />
                       {article.authorName}
-                      <span className="font-normal text-slate-500">
+                      <span className="font-normal text-[#263746]/65">
                         ({article.authorRole})
                       </span>
                     </span>
@@ -178,7 +182,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
               {/* Imagem Principal (Priority LCP) */}
               <figure className="my-6">
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-sm bg-slate-100">
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-sm bg-[#EAF0F2]">
                   <Image
                     src={article.coverImage}
                     alt={article.coverAlt}
@@ -189,14 +193,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   />
                 </div>
                 {article.imageCaption && (
-                  <figcaption className="mt-2 text-xs text-slate-500">
+                  <figcaption className="mt-2 text-xs text-[#263746]/70">
                     {article.imageCaption}
                   </figcaption>
                 )}
               </figure>
 
               {/* Corpo Editorial */}
-              <div className="space-y-5 text-base leading-8 text-slate-800 sm:text-[1.0625rem]">
+              <div className="space-y-5 text-base leading-8 text-[#263746] sm:text-[1.0625rem]">
                 {paragraphs.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
@@ -204,16 +208,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
               {/* Tags SEO */}
               {article.tags.length > 0 && (
-                <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-slate-200 pt-5">
-                  <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-slate-500">
-                    <Tag className="h-3.5 w-3.5" aria-hidden="true" />
+                <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-[#123B50]/12 pt-5">
+                  <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#263746]/70">
+                    <Tag className="h-3.5 w-3.5 text-[#D6A843]" aria-hidden="true" />
                     Assuntos:
                   </span>
                   {article.tags.map((tag) => (
                     <Link
                       key={tag}
                       href={`/busca?q=${encodeURIComponent(tag)}`}
-                      className="rounded-xs border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700 hover:border-[#05226B] hover:text-[#05226B]"
+                      className="rounded-xs border border-[#123B50]/15 bg-[#EAF0F2] px-2.5 py-1 text-xs font-semibold text-[#263746] transition-colors hover:border-[#123B50] hover:bg-[#123B50] hover:text-[#D6A843]"
                     >
                       #{tag}
                     </Link>
@@ -225,11 +229,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               {related.length > 0 && (
                 <section
                   aria-labelledby="related-heading"
-                  className="mt-10 border-t-2 border-[#05226B] pt-6"
+                  className="mt-10 border-t-2 border-[#123B50] pt-6"
                 >
                   <h2
                     id="related-heading"
-                    className="mb-4 font-display text-lg font-black uppercase tracking-tight text-[#05226B]"
+                    className="mb-4 font-display text-lg font-black uppercase tracking-tight text-[#123B50]"
                   >
                     Leia Também
                   </h2>

@@ -17,7 +17,7 @@ interface HeaderProps {
 /**
  * Cabeçalho Institucional BA Infoco:
  * - Faixa superior branca com Menu Hambúrguer, Logotipo centralizado, Busca e Acesso Admin.
- * - Faixa secundária em Azul Corporativo (#05226B) com rolagem horizontal fluida em mobile.
+ * - Faixa secundária em Azul-Petróleo (#123B50) com filete Dourado (#D6A843) e rolagem horizontal fluida em mobile.
  */
 export function Header({ categories }: HeaderProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -51,11 +51,11 @@ export function Header({ categories }: HeaderProps) {
             onClick={() => setDrawerOpen(true)}
             aria-label="Abrir menu completo de editorias"
             aria-expanded={drawerOpen}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-800 transition-colors hover:bg-slate-100 hover:text-[#05226B]"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-[#263746] transition-colors hover:bg-[#EAF0F2] hover:text-[#123B50]"
           >
             <Menu className="h-6 w-6 stroke-[1.8]" aria-hidden="true" />
           </button>
-          <span className="hidden text-xs font-medium text-slate-500 md:inline-block">
+          <span className="hidden text-xs font-medium text-[#263746]/70 md:inline-block">
             Salvador, Bahia • Tempo Real
           </span>
         </div>
@@ -72,7 +72,7 @@ export function Header({ categories }: HeaderProps) {
             onClick={() => setSearchOpen((prev) => !prev)}
             aria-label={searchOpen ? "Fechar barra de busca" : "Buscar notícias"}
             aria-expanded={searchOpen}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-slate-700 transition-colors hover:bg-slate-100 hover:text-[#05226B]"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-[#263746] transition-colors hover:bg-[#EAF0F2] hover:text-[#123B50]"
           >
             {searchOpen ? (
               <X className="h-5 w-5" aria-hidden="true" />
@@ -83,7 +83,7 @@ export function Header({ categories }: HeaderProps) {
 
           <Link
             href="/admin"
-            className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-slate-50 px-2.5 py-1.5 text-xs font-bold text-[#05226B] transition-colors hover:border-[#05226B] hover:bg-[#05226B] hover:text-white"
+            className="inline-flex items-center gap-1.5 rounded-md border border-[#123B50]/20 bg-[#EAF0F2] px-2.5 py-1.5 text-xs font-bold text-[#123B50] transition-colors hover:border-[#123B50] hover:bg-[#123B50] hover:text-white"
             aria-label="Acessar Painel Administrativo"
           >
             <LayoutDashboard className="h-3.5 w-3.5" aria-hidden="true" />
@@ -95,7 +95,7 @@ export function Header({ categories }: HeaderProps) {
 
       {/* Barra de Busca Expansível */}
       {searchOpen && (
-        <div className="border-t border-slate-200 bg-slate-50 px-4 py-2.5">
+        <div className="border-t border-[#123B50]/10 bg-[#EAF0F2] px-4 py-2.5">
           <form
             onSubmit={handleSearchSubmit}
             role="search"
@@ -112,11 +112,11 @@ export function Header({ categories }: HeaderProps) {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Digite palavras-chave, assunto ou editoria..."
-              className="flex-1 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 focus:border-[#05226B] focus:outline-none"
+              className="flex-1 rounded-md border border-[#263746]/25 bg-white px-3 py-2 text-sm text-[#263746] placeholder:text-[#263746]/55 focus:border-[#123B50] focus:outline-none"
             />
             <button
               type="submit"
-              className="rounded-md bg-[#C80A14] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[#A60710]"
+              className="rounded-md bg-[#D6A843] px-4 py-2 text-sm font-extrabold text-[#123B50] transition-colors hover:bg-[#C29534]"
             >
               Buscar
             </button>
@@ -124,10 +124,10 @@ export function Header({ categories }: HeaderProps) {
         </div>
       )}
 
-      {/* Barra de Navegação Secundária em Azul Corporativo (#05226B) */}
+      {/* Barra de Navegação Secundária em Azul-Petróleo (#123B50) */}
       <nav
         aria-label="Editorias principais"
-        className="w-full bg-[#05226B] text-white border-b-2 border-[#031649]"
+        className="w-full bg-[#123B50] text-white border-b-2 border-[#D6A843]"
       >
         <div className="mx-auto max-w-[1200px] px-2 sm:px-4">
           <ul className="no-scrollbar flex items-center gap-0.5 overflow-x-auto py-0.5">
@@ -137,8 +137,8 @@ export function Header({ categories }: HeaderProps) {
                 aria-current={isHome ? "page" : undefined}
                 className={`block whitespace-nowrap px-3 py-2.5 text-[11px] font-bold uppercase tracking-wider transition-colors ${
                   isHome
-                    ? "bg-[#C80A14] text-white"
-                    : "text-white/95 hover:bg-[#0A349C] hover:text-white"
+                    ? "bg-[#D6A843] text-[#123B50] font-extrabold"
+                    : "text-white/95 hover:bg-[#263746] hover:text-[#D6A843]"
                 }`}
               >
                 HOME
@@ -153,8 +153,8 @@ export function Header({ categories }: HeaderProps) {
                     aria-current={isActive ? "page" : undefined}
                     className={`block whitespace-nowrap px-3 py-2.5 text-[11px] font-bold uppercase tracking-wider transition-colors ${
                       isActive
-                        ? "bg-[#C80A14] text-white"
-                        : "text-white/95 hover:bg-[#0A349C] hover:text-white"
+                        ? "bg-[#D6A843] text-[#123B50] font-extrabold"
+                        : "text-white/95 hover:bg-[#263746] hover:text-[#D6A843]"
                     }`}
                   >
                     {cat.name}

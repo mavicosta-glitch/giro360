@@ -40,7 +40,7 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
       <button
         type="button"
         onClick={handleNativeShare}
-        className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 transition hover:border-[#05226B] hover:text-[#05226B]"
+        className="inline-flex items-center gap-1.5 rounded-md border border-[#123B50]/20 bg-white px-3 py-1.5 text-xs font-bold text-[#263746] transition hover:border-[#123B50] hover:bg-[#EAF0F2] hover:text-[#123B50]"
       >
         <Share2 className="h-3.5 w-3.5" aria-hidden="true" />
         Compartilhar
@@ -49,11 +49,11 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
       <button
         type="button"
         onClick={handleCopy}
-        className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 transition hover:border-[#05226B] hover:text-[#05226B]"
+        className="inline-flex items-center gap-1.5 rounded-md border border-[#123B50]/20 bg-white px-3 py-1.5 text-xs font-bold text-[#263746] transition hover:border-[#123B50] hover:bg-[#EAF0F2] hover:text-[#123B50]"
       >
         {copied ? (
           <>
-            <Check className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
+            <Check className="h-3.5 w-3.5 text-[#123B50]" aria-hidden="true" />
             Link copiado
           </>
         ) : (

@@ -50,7 +50,7 @@ export function SearchClient({
   return (
     <div className="space-y-6">
       {/* Formulário de Busca Instantânea */}
-      <div className="rounded-sm border border-slate-200 bg-slate-50 p-4 sm:p-5">
+      <div className="rounded-sm border border-[#123B50]/12 bg-[#EAF0F2] p-4 sm:p-5">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-12">
           <div className="relative md:col-span-8">
             <Search
@@ -66,7 +66,7 @@ export function SearchClient({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar por assunto, manchete, tag ou autor..."
-              className="w-full rounded-md border border-slate-300 bg-white py-2.5 pl-9 pr-3 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+              className="w-full rounded-md border border-[#123B50]/20 bg-white py-2.5 pl-9 pr-3 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
             />
           </div>
 
@@ -78,7 +78,7 @@ export function SearchClient({
               id="portal-search-category"
               value={categorySlug}
               onChange={(e) => setCategorySlug(e.target.value)}
-              className="w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm font-semibold text-slate-800 focus:border-[#05226B] focus:outline-none"
+              className="w-full rounded-md border border-[#123B50]/20 bg-white px-3 py-2.5 text-sm font-semibold text-[#263746] focus:border-[#123B50] focus:outline-none"
             >
               <option value="">Todas as Editorias</option>
               {categories.map((cat) => (
@@ -90,7 +90,7 @@ export function SearchClient({
           </div>
         </div>
 
-        <div className="mt-3 flex items-center justify-between text-xs text-slate-600">
+        <div className="mt-3 flex items-center justify-between text-xs text-[#263746]/80">
           <span>
             {results.length}{" "}
             {results.length === 1
@@ -98,7 +98,7 @@ export function SearchClient({
               : "resultados encontrados"}
           </span>
           {searchQuery.isFetching && (
-            <span className="inline-flex items-center gap-1.5 font-semibold text-[#05226B]">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-[#123B50]">
               <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
               Atualizando...
             </span>
@@ -108,11 +108,11 @@ export function SearchClient({
 
       {/* Grid de Resultados */}
       {results.length === 0 ? (
-        <div className="rounded-sm border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
-          <p className="font-display text-base font-bold text-slate-800">
+        <div className="rounded-sm border border-dashed border-[#123B50]/25 bg-white px-6 py-14 text-center">
+          <p className="font-display text-base font-bold text-[#123B50]">
             Nenhuma matéria encontrada para essa pesquisa.
           </p>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[#263746]/70">
             Tente outros termos ou remova o filtro de editoria.
           </p>
         </div>

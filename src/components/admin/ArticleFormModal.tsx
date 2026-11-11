@@ -125,14 +125,14 @@ export function ArticleFormModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/65 p-3 backdrop-blur-xs sm:p-6"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#263746]/75 p-3 backdrop-blur-xs sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="article-modal-title"
     >
       <div className="flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl">
         {/* Cabeçalho do Modal */}
-        <div className="flex items-center justify-between border-b border-slate-200 bg-[#05226B] px-5 py-4 text-white">
+        <div className="flex items-center justify-between border-b-2 border-[#D6A843] bg-[#123B50] px-5 py-4 text-white">
           <div>
             <h2
               id="article-modal-title"
@@ -173,7 +173,7 @@ export function ArticleFormModal({
             <div className="md:col-span-8">
               <label
                 htmlFor="article-title"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Manchete Principal *
               </label>
@@ -186,14 +186,14 @@ export function ArticleFormModal({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Ex: Porto de Salvador bate recorde de exportações no trimestre"
-                className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
               />
             </div>
 
             <div className="md:col-span-4">
               <label
                 htmlFor="article-category"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Editoria (Categoria) *
               </label>
@@ -202,7 +202,7 @@ export function ArticleFormModal({
                 required
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
-                className="mt-1.5 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#123B50]/20 bg-white px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
               >
                 {categories.map((cat) => (
                   <option key={cat.id} value={cat.id}>
@@ -217,7 +217,7 @@ export function ArticleFormModal({
             <div className="md:col-span-7">
               <label
                 htmlFor="article-subtitle"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Subtítulo / Linha Fina *
               </label>
@@ -230,14 +230,14 @@ export function ArticleFormModal({
                 value={subtitle}
                 onChange={(e) => setSubtitle(e.target.value)}
                 placeholder="Resumo objetivo que complementa a manchete e melhora o snippet de SEO."
-                className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
               />
             </div>
 
             <div className="md:col-span-5">
               <label
                 htmlFor="article-slug"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Slug da URL (Opcional)
               </label>
@@ -247,7 +247,7 @@ export function ArticleFormModal({
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
                 placeholder="gerado-automaticamente"
-                className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
               />
               <p className="mt-1 truncate text-[11px] text-slate-500">
                 URL: /noticia/
@@ -259,13 +259,13 @@ export function ArticleFormModal({
           </div>
 
           {/* Imagem de Capa + Upload + Presets */}
-          <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
+          <div className="rounded-md border border-[#123B50]/15 bg-[#EAF0F2] p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-800">
-                <ImagePlus className="h-4 w-4 text-[#05226B]" aria-hidden="true" />
+              <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#123B50]">
+                <ImagePlus className="h-4 w-4 text-[#D6A843]" aria-hidden="true" />
                 Imagem de Capa & Acessibilidade (SEO)
               </span>
-              <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-[#05226B] bg-white px-3 py-1.5 text-xs font-bold text-[#05226B] transition hover:bg-[#05226B] hover:text-white">
+              <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-[#123B50] bg-white px-3 py-1.5 text-xs font-bold text-[#123B50] transition hover:bg-[#123B50] hover:text-[#D6A843]">
                 {uploading ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
                 ) : (
@@ -303,7 +303,7 @@ export function ArticleFormModal({
                     value={coverImage}
                     onChange={(e) => setCoverImage(e.target.value)}
                     placeholder="https://... ou /images/news/..."
-                    className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 focus:border-[#05226B] focus:outline-none"
+                    className="mt-1 w-full rounded-md border border-[#123B50]/20 bg-white px-3 py-2 text-xs text-[#263746] focus:border-[#123B50] focus:outline-none"
                   />
                 </div>
 
@@ -318,7 +318,7 @@ export function ArticleFormModal({
                     <button
                       type="button"
                       onClick={() => title.trim() && setCoverAlt(title.trim())}
-                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[#05226B] hover:underline"
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[#123B50] hover:text-[#263746] hover:underline"
                     >
                       <Sparkles className="h-3 w-3" aria-hidden="true" />
                       Copiar da manchete
@@ -332,7 +332,7 @@ export function ArticleFormModal({
                     value={coverAlt}
                     onChange={(e) => setCoverAlt(e.target.value)}
                     placeholder="Descreva objetivamente o que aparece na foto"
-                    className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 focus:border-[#05226B] focus:outline-none"
+                    className="mt-1 w-full rounded-md border border-[#123B50]/20 bg-white px-3 py-2 text-xs text-[#263746] focus:border-[#123B50] focus:outline-none"
                   />
                 </div>
 
@@ -349,7 +349,7 @@ export function ArticleFormModal({
                     value={imageCaption}
                     onChange={(e) => setImageCaption(e.target.value)}
                     placeholder="Ex: Foto: Redação BA Infoco"
-                    className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 focus:border-[#05226B] focus:outline-none"
+                    className="mt-1 w-full rounded-md border border-[#123B50]/20 bg-white px-3 py-2 text-xs text-[#263746] focus:border-[#123B50] focus:outline-none"
                   />
                 </div>
               </div>
@@ -377,8 +377,8 @@ export function ArticleFormModal({
                       onClick={() => setCoverImage(preset.url)}
                       className={`rounded border px-2 py-0.5 text-[10px] font-semibold transition ${
                         coverImage === preset.url
-                          ? "border-[#05226B] bg-[#05226B] text-white"
-                          : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100"
+                          ? "border-[#123B50] bg-[#123B50] text-[#D6A843]"
+                          : "border-[#123B50]/20 bg-white text-[#263746] hover:bg-[#EAF0F2]"
                       }`}
                     >
                       {preset.label}
@@ -394,7 +394,7 @@ export function ArticleFormModal({
             <div className="flex items-center justify-between">
               <label
                 htmlFor="article-content"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Corpo da Matéria *
               </label>
@@ -410,7 +410,7 @@ export function ArticleFormModal({
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="Escreva os parágrafos da reportagem separados por linha em branco..."
-              className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm leading-relaxed text-slate-900 focus:border-[#05226B] focus:outline-none"
+              className="mt-1.5 w-full rounded-md border border-[#123B50]/20 px-3 py-2.5 text-sm leading-relaxed text-[#263746] focus:border-[#123B50] focus:outline-none"
             />
           </div>
 
@@ -419,7 +419,7 @@ export function ArticleFormModal({
             <div>
               <label
                 htmlFor="article-author"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Autor *
               </label>
@@ -429,14 +429,14 @@ export function ArticleFormModal({
                 required
                 value={authorName}
                 onChange={(e) => setAuthorName(e.target.value)}
-                className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
               />
             </div>
 
             <div>
               <label
                 htmlFor="article-role"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Cargo / Editoria
               </label>
@@ -445,14 +445,14 @@ export function ArticleFormModal({
                 type="text"
                 value={authorRole}
                 onChange={(e) => setAuthorRole(e.target.value)}
-                className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
               />
             </div>
 
             <div>
               <label
                 htmlFor="article-tags"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Tags (vírgula)
               </label>
@@ -462,14 +462,14 @@ export function ArticleFormModal({
                 value={tagsRaw}
                 onChange={(e) => setTagsRaw(e.target.value)}
                 placeholder="Bahia, Salvador, Economia"
-                className="mt-1.5 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#05226B] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
               />
             </div>
 
             <div>
               <label
                 htmlFor="article-status"
-                className="block text-xs font-bold uppercase tracking-wider text-slate-700"
+                className="block text-xs font-bold uppercase tracking-wider text-[#123B50]"
               >
                 Status
               </label>
@@ -477,7 +477,7 @@ export function ArticleFormModal({
                 id="article-status"
                 value={status}
                 onChange={(e) => setStatus(e.target.value as ArticleStatus)}
-                className="mt-1.5 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-900 focus:border-[#05226B] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#123B50]/20 bg-white px-3 py-2 text-sm font-semibold text-[#263746] focus:border-[#123B50] focus:outline-none"
               >
                 <option value="published">Publicado</option>
                 <option value="draft">Rascunho</option>
@@ -486,17 +486,17 @@ export function ArticleFormModal({
           </div>
 
           {/* Posicionamento Editorial */}
-          <fieldset className="rounded-md border border-slate-200 bg-slate-50 p-4">
-            <legend className="px-1 text-xs font-bold uppercase tracking-wider text-slate-700">
+          <fieldset className="rounded-md border border-[#123B50]/15 bg-[#EAF0F2] p-4">
+            <legend className="px-1 text-xs font-bold uppercase tracking-wider text-[#123B50]">
               Posicionamento na Capa do Portal
             </legend>
             <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <label className="flex cursor-pointer items-start gap-2.5 rounded-md border border-slate-200 bg-white p-3 hover:border-[#C80A14]">
+              <label className="flex cursor-pointer items-start gap-2.5 rounded-md border border-[#123B50]/15 bg-white p-3 hover:border-[#D6A843]">
                 <input
                   type="checkbox"
                   checked={isHero}
                   onChange={(e) => setIsHero(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 accent-[#C80A14]"
+                  className="mt-0.5 h-4 w-4 accent-[#D6A843]"
                 />
                 <span className="text-xs">
                   <strong className="block text-slate-900">
@@ -508,12 +508,12 @@ export function ArticleFormModal({
                 </span>
               </label>
 
-              <label className="flex cursor-pointer items-start gap-2.5 rounded-md border border-slate-200 bg-white p-3 hover:border-[#C80A14]">
+              <label className="flex cursor-pointer items-start gap-2.5 rounded-md border border-[#123B50]/15 bg-white p-3 hover:border-[#D6A843]">
                 <input
                   type="checkbox"
                   checked={isBreaking}
                   onChange={(e) => setIsBreaking(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 accent-[#C80A14]"
+                  className="mt-0.5 h-4 w-4 accent-[#D6A843]"
                 />
                 <span className="text-xs">
                   <strong className="block text-slate-900">
@@ -525,12 +525,12 @@ export function ArticleFormModal({
                 </span>
               </label>
 
-              <label className="flex cursor-pointer items-start gap-2.5 rounded-md border border-slate-200 bg-white p-3 hover:border-[#05226B]">
+              <label className="flex cursor-pointer items-start gap-2.5 rounded-md border border-[#123B50]/15 bg-white p-3 hover:border-[#123B50]">
                 <input
                   type="checkbox"
                   checked={isFeatured}
                   onChange={(e) => setIsFeatured(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 accent-[#05226B]"
+                  className="mt-0.5 h-4 w-4 accent-[#123B50]"
                 />
                 <span className="text-xs">
                   <strong className="block text-slate-900">
@@ -545,18 +545,18 @@ export function ArticleFormModal({
           </fieldset>
 
           {/* Ações do Modal */}
-          <div className="flex items-center justify-end gap-3 border-t border-slate-200 pt-4">
+          <div className="flex items-center justify-end gap-3 border-t border-[#123B50]/15 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              className="rounded-md border border-[#123B50]/20 bg-white px-4 py-2 text-sm font-semibold text-[#263746] hover:bg-[#EAF0F2]"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={isSubmitting || uploading}
-              className="inline-flex items-center gap-2 rounded-md bg-[#05226B] px-5 py-2 text-sm font-bold text-white shadow-xs transition hover:bg-[#082F8A] disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-md bg-[#D6A843] px-5 py-2 text-sm font-bold text-[#123B50] shadow-xs transition hover:bg-[#C29534] disabled:opacity-60"
             >
               {isSubmitting && (
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />

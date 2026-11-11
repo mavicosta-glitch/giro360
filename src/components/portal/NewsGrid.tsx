@@ -57,16 +57,16 @@ export function NewsGrid({ data }: NewsGridProps) {
           <section aria-label="Manchete principal e destaques">
             <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
               {!heroArticle && secondaryFeatured.length === 0 && (
-                <div className="md:col-span-12 rounded-md border border-slate-200 bg-slate-50 p-6 text-center">
-                  <h1 className="font-display text-lg font-black text-[#05226B]">
+                <div className="md:col-span-12 rounded-md border border-[#123B50]/15 bg-[#EAF0F2] p-6 text-center">
+                  <h1 className="font-display text-lg font-black text-[#123B50]">
                     Portal conectado ao Supabase — aguardando conteúdo inicial
                   </h1>
-                  <p className="mt-1.5 text-sm text-slate-600">
-                    Execute o script <code className="rounded bg-slate-200 px-1.5 py-0.5 text-xs font-semibold">supabase/schema.sql</code> no Supabase SQL Editor para carregar as editorias e reportagens iniciais ou acesse o painel editorial.
+                  <p className="mt-1.5 text-sm text-[#263746]">
+                    Execute o script <code className="rounded bg-white px-1.5 py-0.5 text-xs font-semibold text-[#123B50]">supabase/schema.sql</code> no Supabase SQL Editor para carregar as editorias e reportagens iniciais ou acesse o painel editorial.
                   </p>
                   <Link
                     href="/admin"
-                    className="mt-4 inline-flex items-center gap-2 rounded-md bg-[#05226B] px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-[#082F8A]"
+                    className="mt-4 inline-flex items-center gap-2 rounded-md bg-[#123B50] px-4 py-2 text-xs font-bold uppercase tracking-wide text-white transition-colors hover:bg-[#263746]"
                   >
                     Abrir Painel Admin
                     <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -101,21 +101,21 @@ export function NewsGrid({ data }: NewsGridProps) {
           {/* Feed de Últimas Notícias */}
           {recentFeed.length > 0 && (
             <section aria-labelledby="latest-news-heading">
-              <div className="mb-4 flex items-center justify-between border-b-2 border-[#05226B] pb-2">
+              <div className="mb-4 flex items-center justify-between border-b-2 border-[#123B50] pb-2">
                 <h2
                   id="latest-news-heading"
-                  className="flex items-center gap-2 font-display text-lg font-black uppercase tracking-tight text-[#05226B]"
+                  className="flex items-center gap-2 font-display text-lg font-black uppercase tracking-tight text-[#123B50]"
                 >
                   <span
-                    className="inline-block h-5 w-1.5 bg-[#C80A14]"
+                    className="inline-block h-5 w-1.5 bg-[#D6A843]"
                     aria-hidden="true"
                   />
-                  <Newspaper className="h-5 w-5 text-[#C80A14]" aria-hidden="true" />
+                  <Newspaper className="h-5 w-5 text-[#D6A843]" aria-hidden="true" />
                   Últimas Notícias
                 </h2>
                 <Link
                   href="/busca"
-                  className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wide text-[#05226B] hover:text-[#C80A14]"
+                  className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wide text-[#123B50] hover:text-[#263746]"
                 >
                   Ver arquivo
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -149,7 +149,7 @@ export function NewsGrid({ data }: NewsGridProps) {
                 return (
                   <div
                     key={category.id}
-                    className="rounded-sm border border-slate-200 bg-white p-4 sm:p-5"
+                    className="rounded-sm border border-[#123B50]/12 bg-white p-4 sm:p-5"
                   >
                     <div
                       className="mb-4 flex items-center justify-between border-b-2 pb-2"
@@ -163,7 +163,7 @@ export function NewsGrid({ data }: NewsGridProps) {
                       </h2>
                       <Link
                         href={`/categoria/${category.slug}`}
-                        className="inline-flex items-center gap-1 text-xs font-bold text-slate-700 hover:text-[#05226B]"
+                        className="inline-flex items-center gap-1 text-xs font-bold text-[#263746] hover:text-[#123B50]"
                       >
                         Mais em {category.name}
                         <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />

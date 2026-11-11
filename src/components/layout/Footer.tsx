@@ -9,22 +9,22 @@ interface FooterProps {
 
 export function Footer({ categories }: FooterProps) {
   return (
-    <footer className="mt-8 border-t-4 border-[#C80A14] bg-[#031649] text-white">
+    <footer className="mt-8 border-t-4 border-[#D6A843] bg-[#263746] text-white">
       <div className="mx-auto max-w-[1200px] px-4 py-10 sm:px-6">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
           {/* Identidade Institucional */}
           <div className="space-y-4 md:col-span-4">
             <BrandLogo inverted />
-            <p className="text-xs leading-relaxed text-white/85">
+            <p className="text-xs leading-relaxed text-[#EAF0F2]/90">
               Portal de jornalismo regional e nacional comprometido com a informação em tempo real, apuração responsável e cobertura da Bahia, do Brasil e do mundo.
             </p>
-            <div className="space-y-1.5 text-xs text-white/80">
+            <div className="space-y-1.5 text-xs text-[#EAF0F2]/85">
               <p className="flex items-center gap-2">
-                <MapPin className="h-3.5 w-3.5 text-[#FF4D58]" aria-hidden="true" />
+                <MapPin className="h-3.5 w-3.5 text-[#D6A843]" aria-hidden="true" />
                 Salvador, Bahia — Brasil
               </p>
               <p className="flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 text-[#FF4D58]" aria-hidden="true" />
+                <Mail className="h-3.5 w-3.5 text-[#D6A843]" aria-hidden="true" />
                 redacao@bainfoco.com.br
               </p>
             </div>
@@ -32,7 +32,7 @@ export function Footer({ categories }: FooterProps) {
 
           {/* Mapa de Editorias */}
           <div className="md:col-span-5">
-            <h2 className="border-b border-white/15 pb-2 font-display text-xs font-extrabold uppercase tracking-wider text-white">
+            <h2 className="border-b border-[#D6A843]/35 pb-2 font-display text-xs font-extrabold uppercase tracking-wider text-[#D6A843]">
               Editorias
             </h2>
             <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-xs sm:grid-cols-3">
@@ -40,7 +40,7 @@ export function Footer({ categories }: FooterProps) {
                 <li key={cat.id}>
                   <Link
                     href={`/categoria/${cat.slug}`}
-                    className="text-white/85 transition-colors hover:text-white hover:underline"
+                    className="text-[#EAF0F2]/90 transition-colors hover:text-[#D6A843] hover:underline"
                   >
                     {cat.name}
                   </Link>
@@ -51,14 +51,14 @@ export function Footer({ categories }: FooterProps) {
 
           {/* Institucional & Redação */}
           <div className="md:col-span-3">
-            <h2 className="border-b border-white/15 pb-2 font-display text-xs font-extrabold uppercase tracking-wider text-white">
+            <h2 className="border-b border-[#D6A843]/35 pb-2 font-display text-xs font-extrabold uppercase tracking-wider text-[#D6A843]">
               Portal & Redação
             </h2>
             <ul className="mt-3 space-y-2 text-xs">
               <li>
                 <Link
                   href="/"
-                  className="text-white/85 transition-colors hover:text-white hover:underline"
+                  className="text-[#EAF0F2]/90 transition-colors hover:text-[#D6A843] hover:underline"
                 >
                   Página Inicial
                 </Link>
@@ -66,7 +66,7 @@ export function Footer({ categories }: FooterProps) {
               <li>
                 <Link
                   href="/busca"
-                  className="text-white/85 transition-colors hover:text-white hover:underline"
+                  className="text-[#EAF0F2]/90 transition-colors hover:text-[#D6A843] hover:underline"
                 >
                   Buscar no Arquivo
                 </Link>
@@ -74,7 +74,7 @@ export function Footer({ categories }: FooterProps) {
               <li>
                 <Link
                   href="/admin"
-                  className="inline-flex items-center gap-1.5 font-semibold text-[#FFD400] hover:underline"
+                  className="inline-flex items-center gap-1.5 font-semibold text-[#D6A843] hover:underline"
                 >
                   <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
                   Painel Administrativo
@@ -83,7 +83,7 @@ export function Footer({ categories }: FooterProps) {
               <li>
                 <Link
                   href="/sitemap.xml"
-                  className="text-white/85 transition-colors hover:text-white hover:underline"
+                  className="text-[#EAF0F2]/90 transition-colors hover:text-[#D6A843] hover:underline"
                 >
                   Mapa do Site (XML)
                 </Link>
@@ -92,7 +92,7 @@ export function Footer({ categories }: FooterProps) {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-2 border-t border-white/15 pt-6 text-[11px] text-white/75 sm:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-2 border-t border-white/15 pt-6 text-[11px] text-[#EAF0F2]/75 sm:flex-row">
           <p>
             © {new Date().getFullYear()} BA Infoco — Jornalismo Digital de Alta Performance.
           </p>

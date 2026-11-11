@@ -35,7 +35,7 @@ export const createCategorySchema = z.object({
     .trim()
     .regex(/^#[0-9A-Fa-f]{6}$/, "Cor deve estar no formato hexadecimal #RRGGBB.")
     .optional()
-    .default("#05226B"),
+    .default("#123B50"),
   displayOrder: z.coerce.number().int().min(0).max(999).optional().default(0),
   showInMenu: z.boolean().optional().default(true),
 });

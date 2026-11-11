@@ -9,14 +9,15 @@ interface BrandLogoProps {
  * Logotipo vetorial institucional BA Infoco em SVG inline para carregamento instantâneo (LCP/CLS zero).
  */
 export function BrandLogo({ inverted = false, compact = false }: BrandLogoProps) {
-  const primaryColor = inverted ? "#FFFFFF" : "#05226B";
-  const accentColor = inverted ? "#FF4D58" : "#C80A14";
+  const primaryColor = inverted ? "#FFFFFF" : "#123B50";
+  const accentColor = "#D6A843";
+  const subtitleColor = inverted ? "#D6A843" : "#263746";
 
   return (
     <Link
       href="/"
       aria-label="BA Infoco - Página inicial do portal de notícias"
-      className="inline-flex flex-col items-center justify-center leading-none select-none group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C80A14] rounded"
+      className="inline-flex flex-col items-center justify-center leading-none select-none group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D6A843] rounded"
     >
       <span className="relative inline-flex items-center">
         {/* Ícone de foco estilizado integrado ao logotipo */}
@@ -59,7 +60,7 @@ export function BrandLogo({ inverted = false, compact = false }: BrandLogoProps)
       <span
         className="font-display font-extrabold uppercase tracking-[0.22em] mt-0.5"
         style={{
-          color: accentColor,
+          color: subtitleColor,
           fontSize: compact ? "0.62rem" : "0.75rem",
         }}
       >

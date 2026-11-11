@@ -69,9 +69,9 @@ export function BreakingNewsTicker({
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="flex min-h-[42px] items-stretch overflow-hidden rounded-sm border border-slate-200 bg-[#F3F4F6]">
-        {/* Selo Vermelho Destaques */}
-        <div className="flex shrink-0 items-center gap-1.5 bg-[#C80A14] px-3.5 py-2 text-white sm:px-4">
+      <div className="flex min-h-[42px] items-stretch overflow-hidden rounded-sm border border-[#123B50]/15 bg-[#EAF0F2]">
+        {/* Selo Dourado Destaques */}
+        <div className="flex shrink-0 items-center gap-1.5 bg-[#D6A843] px-3.5 py-2 text-[#123B50] sm:px-4">
           <Radio className="h-3.5 w-3.5 animate-pulse" aria-hidden="true" />
           <span className="text-xs font-extrabold tracking-wide sm:text-sm">
             Destaques
@@ -82,12 +82,12 @@ export function BreakingNewsTicker({
         <div className="flex min-w-0 flex-1 items-center gap-6 px-3.5 py-2">
           <Link
             href={`/noticia/${currentArticle.slug}`}
-            className="group flex min-w-0 flex-1 items-baseline gap-1.5 text-xs text-slate-800 transition-colors hover:text-[#05226B] sm:text-sm"
+            className="group flex min-w-0 flex-1 items-baseline gap-1.5 text-xs text-[#263746] transition-colors hover:text-[#123B50] sm:text-sm"
           >
-            <strong className="shrink-0 font-extrabold text-slate-950">
+            <strong className="shrink-0 font-extrabold text-[#123B50]">
               {currentArticle.categoryName}
             </strong>
-            <span aria-hidden="true" className="text-slate-400">
+            <span aria-hidden="true" className="text-[#263746]/45">
               -
             </span>
             <span className="truncate font-medium group-hover:underline">
@@ -99,12 +99,12 @@ export function BreakingNewsTicker({
           {items.length > 1 && nextArticle && (
             <Link
               href={`/noticia/${nextArticle.slug}`}
-              className="group hidden min-w-0 flex-1 items-baseline gap-1.5 border-l border-slate-300 pl-5 text-xs text-slate-700 transition-colors hover:text-[#05226B] lg:flex lg:text-sm"
+              className="group hidden min-w-0 flex-1 items-baseline gap-1.5 border-l border-[#123B50]/15 pl-5 text-xs text-[#263746]/85 transition-colors hover:text-[#123B50] lg:flex lg:text-sm"
             >
-              <strong className="shrink-0 font-extrabold text-slate-950">
+              <strong className="shrink-0 font-extrabold text-[#123B50]">
                 {nextArticle.categoryName}
               </strong>
-              <span aria-hidden="true" className="text-slate-400">
+              <span aria-hidden="true" className="text-[#263746]/45">
                 -
               </span>
               <span className="truncate font-medium group-hover:underline">
@@ -116,12 +116,12 @@ export function BreakingNewsTicker({
 
         {/* Controles Acessíveis de Rotação */}
         {items.length > 1 && (
-          <div className="flex shrink-0 items-center border-l border-slate-200 bg-white/70 px-1">
+          <div className="flex shrink-0 items-center border-l border-[#123B50]/15 bg-white/80 px-1">
             <button
               type="button"
               onClick={goPrev}
               aria-label="Manchete anterior"
-              className="inline-flex h-8 w-7 items-center justify-center rounded text-slate-600 hover:bg-slate-200 hover:text-slate-950"
+              className="inline-flex h-8 w-7 items-center justify-center rounded text-[#263746] hover:bg-[#EAF0F2] hover:text-[#123B50]"
             >
               <ChevronLeft className="h-4 w-4" aria-hidden="true" />
             </button>
@@ -133,7 +133,7 @@ export function BreakingNewsTicker({
                   ? "Retomar rotação automática dos destaques"
                   : "Pausar rotação automática dos destaques"
               }
-              className="inline-flex h-8 w-7 items-center justify-center rounded text-slate-600 hover:bg-slate-200 hover:text-slate-950"
+              className="inline-flex h-8 w-7 items-center justify-center rounded text-[#263746] hover:bg-[#EAF0F2] hover:text-[#123B50]"
             >
               {isPaused ? (
                 <Play className="h-3.5 w-3.5" aria-hidden="true" />
@@ -145,7 +145,7 @@ export function BreakingNewsTicker({
               type="button"
               onClick={goNext}
               aria-label="Próxima manchete"
-              className="inline-flex h-8 w-7 items-center justify-center rounded text-slate-600 hover:bg-slate-200 hover:text-slate-950"
+              className="inline-flex h-8 w-7 items-center justify-center rounded text-[#263746] hover:bg-[#EAF0F2] hover:text-[#123B50]"
             >
               <ChevronRight className="h-4 w-4" aria-hidden="true" />
             </button>
