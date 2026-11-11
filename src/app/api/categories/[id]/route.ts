@@ -1,15 +1,22 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { revalidatePortalCache } from "@/application/actions/revalidate-portal";
 import { updateCategorySchema } from "@/domain/validation/schemas";
-import { ensureSeeded } from "@/infrastructure/db/seed";
 import { categoryRepository } from "@/infrastructure/repositories/category-repository";
+import { getAdminSessionContext } from "@/infrastructure/supabase/auth-cookies";
 
 interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
 export async function PATCH(request: NextRequest, context: RouteContext) {
-  ensureSeeded();
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return NextResponse.json(
+      { error: "Autenticação administrativa necessária." },
+      { status: 401 }
+    );
+  }
+
   const { id } = await context.params;
   try {
     const body = await request.json();
@@ -26,7 +33,10 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       );
     }
 
-    const updated = categoryRepository.update(parsed.data);
+    const updated = await categoryRepository.update(
+      parsed.data,
+      session.accessToken
+    );
     revalidatePortalCache([`/categoria/${updated.slug}`]);
     return NextResponse.json({ category: updated });
   } catch (error) {
@@ -43,11 +53,18 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 }
 
 export async function DELETE(_request: NextRequest, context: RouteContext) {
-  ensureSeeded();
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return NextResponse.json(
+      { error: "Autenticação administrativa necessária." },
+      { status: 401 }
+    );
+  }
+
   const { id } = await context.params;
   try {
-    const existing = categoryRepository.findById(id);
-    categoryRepository.delete(id);
+    const existing = await categoryRepository.findById(id, session.accessToken);
+    await categoryRepository.delete(id, session.accessToken);
     revalidatePortalCache(existing ? [`/categoria/${existing.slug}`] : []);
     return NextResponse.json({ deleted: true, id });
   } catch (error) {
@@ -62,4 +79,3 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
     );
   }
 }
-

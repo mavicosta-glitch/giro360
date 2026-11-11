@@ -8,8 +8,8 @@ import { buildWebSiteJsonLd } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-export default function HomePage() {
-  const data = portalService.getHomeData();
+export default async function HomePage() {
+  const data = await portalService.getHomeData();
   const websiteJsonLd = buildWebSiteJsonLd();
 
   return (
@@ -26,4 +26,3 @@ export default function HomePage() {
     </>
   );
 }
-

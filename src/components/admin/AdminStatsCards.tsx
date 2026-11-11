@@ -1,4 +1,12 @@
-import { Eye, FileCheck2, FileEdit, FolderTree, Radio } from "lucide-react";
+import {
+  BellRing,
+  Eye,
+  FileCheck2,
+  FileEdit,
+  FolderTree,
+  Megaphone,
+  Radio,
+} from "lucide-react";
 import { formatNumberPtBr } from "@/lib/formatters";
 
 export interface AdminStats {
@@ -8,6 +16,8 @@ export interface AdminStats {
   breakingArticles: number;
   totalViews: number;
   totalCategories: number;
+  totalBanners?: number;
+  totalSubscribers?: number;
 }
 
 export function AdminStatsCards({ stats }: { stats: AdminStats }) {
@@ -29,30 +39,40 @@ export function AdminStatsCards({ stats }: { stats: AdminStats }) {
     {
       label: "No Ticker",
       value: formatNumberPtBr(stats.breakingArticles),
-      sub: "manchetes urgentes ativas",
+      sub: "manchetes urgentes",
       icon: Radio,
       accent: "text-[#C80A14] bg-red-50 border-red-200",
     },
     {
       label: "Editorias",
       value: formatNumberPtBr(stats.totalCategories),
-      sub: "categorias cadastradas",
+      sub: `${formatNumberPtBr(stats.totalBanners ?? 0)} banners`,
       icon: FolderTree,
       accent: "text-[#05226B] bg-blue-50 border-blue-200",
     },
     {
-      label: "Leituras Totais",
+      label: "Inscritos",
+      value: formatNumberPtBr(stats.totalSubscribers ?? 0),
+      sub: "Plantão BA Infoco",
+      icon: BellRing,
+      accent: "text-purple-700 bg-purple-50 border-purple-200",
+    },
+    {
+      label: "Leituras",
       value: formatNumberPtBr(stats.totalViews),
-      sub: "visualizações acumuladas",
+      sub: "visualizações totais",
       icon: Eye,
       accent: "text-slate-700 bg-slate-100 border-slate-200",
     },
   ];
 
+  // Referência explícita para manter import organizado
+  void Megaphone;
+
   return (
     <section
       aria-label="Métricas gerais do portal"
-      className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
+      className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6"
     >
       {cards.map((card) => {
         const Icon = card.icon;
@@ -79,4 +99,3 @@ export function AdminStatsCards({ stats }: { stats: AdminStats }) {
     </section>
   );
 }
-

@@ -1,18 +1,18 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { revalidatePortalCache } from "@/application/actions/revalidate-portal";
 import { updateArticleSchema } from "@/domain/validation/schemas";
-import { ensureSeeded } from "@/infrastructure/db/seed";
 import { articleRepository } from "@/infrastructure/repositories/article-repository";
+import { getAdminSessionContext } from "@/infrastructure/supabase/auth-cookies";
 
 interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
 export async function GET(_request: NextRequest, context: RouteContext) {
-  ensureSeeded();
   const { id } = await context.params;
-  const article = articleRepository.findById(id);
-  if (!article) {
+  const session = await getAdminSessionContext();
+  const article = await articleRepository.findById(id, session.accessToken);
+  if (!article || (article.status !== "published" && !session.isAdmin)) {
     return NextResponse.json(
       { error: "Notícia não encontrada." },
       { status: 404 }
@@ -22,7 +22,14 @@ export async function GET(_request: NextRequest, context: RouteContext) {
 }
 
 export async function PATCH(request: NextRequest, context: RouteContext) {
-  ensureSeeded();
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return NextResponse.json(
+      { error: "Autenticação administrativa necessária." },
+      { status: 401 }
+    );
+  }
+
   const { id } = await context.params;
   try {
     const body = await request.json();
@@ -39,7 +46,10 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       );
     }
 
-    const updated = articleRepository.update(parsed.data);
+    const updated = await articleRepository.update(
+      parsed.data,
+      session.accessToken
+    );
     revalidatePortalCache([
       `/noticia/${updated.slug}`,
       `/categoria/${updated.categorySlug}`,
@@ -59,11 +69,18 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 }
 
 export async function DELETE(_request: NextRequest, context: RouteContext) {
-  ensureSeeded();
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return NextResponse.json(
+      { error: "Autenticação administrativa necessária." },
+      { status: 401 }
+    );
+  }
+
   const { id } = await context.params;
   try {
-    const existing = articleRepository.findById(id);
-    articleRepository.delete(id);
+    const existing = await articleRepository.findById(id, session.accessToken);
+    await articleRepository.delete(id, session.accessToken);
     revalidatePortalCache(
       existing
         ? [`/noticia/${existing.slug}`, `/categoria/${existing.categorySlug}`]
@@ -80,4 +97,3 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
     );
   }
 }
-

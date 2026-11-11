@@ -2,18 +2,19 @@ import Link from "next/link";
 import { CloudSun, Eye, Flame, TrendingUp } from "lucide-react";
 import type { Article } from "@/domain/entities/article";
 import type { AdBannerData } from "@/domain/entities/banner";
+import type { MenuCategoryItem } from "@/components/layout/MobileDrawer";
 import { AdBanner } from "@/components/portal/AdBanner";
 import { NewsletterBox } from "@/components/portal/NewsletterBox";
-import type { MenuCategoryItem } from "@/components/layout/MobileDrawer";
 import { formatNumberPtBr } from "@/lib/formatters";
 
 interface SidebarWidgetsProps {
   mostRead: Article[];
   categories: MenuCategoryItem[];
+  banners?: AdBannerData[];
   showTopBanner?: boolean;
 }
 
-const SIDEBAR_AD_PRIMARY: AdBannerData = {
+const DEFAULT_SIDEBAR_AD_PRIMARY: AdBannerData = {
   id: "salvador-square-ad",
   advertiser: "Salvador Prefeitura",
   subheadline: "Voga",
@@ -24,7 +25,7 @@ const SIDEBAR_AD_PRIMARY: AdBannerData = {
   theme: "institutional-navy",
 };
 
-const SIDEBAR_AD_SECONDARY: AdBannerData = {
+const DEFAULT_SIDEBAR_AD_SECONDARY: AdBannerData = {
   id: "agro-bahia-ad",
   advertiser: "Agro Bahia Forte",
   subheadline: "Safra 2026",
@@ -45,11 +46,15 @@ const SIDEBAR_AD_SECONDARY: AdBannerData = {
 export function SidebarWidgets({
   mostRead,
   categories,
+  banners,
   showTopBanner = true,
 }: SidebarWidgetsProps) {
+  const primaryBanner = banners?.[0] ?? DEFAULT_SIDEBAR_AD_PRIMARY;
+  const secondaryBanner = banners?.[1] ?? DEFAULT_SIDEBAR_AD_SECONDARY;
+
   return (
     <aside aria-label="Destaques laterais e widgets" className="space-y-6">
-      {showTopBanner && <AdBanner banner={SIDEBAR_AD_PRIMARY} />}
+      {showTopBanner && <AdBanner banner={primaryBanner} />}
 
       {/* Widget Mais Lidas */}
       <section
@@ -146,7 +151,7 @@ export function SidebarWidgets({
 
       <NewsletterBox />
 
-      <AdBanner banner={SIDEBAR_AD_SECONDARY} />
+      <AdBanner banner={secondaryBanner} />
 
       {/* Mapa Rápido de Editorias */}
       <section
@@ -174,4 +179,3 @@ export function SidebarWidgets({
     </aside>
   );
 }
-

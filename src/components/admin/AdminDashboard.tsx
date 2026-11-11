@@ -11,12 +11,15 @@ import {
 } from "@tanstack/react-query";
 import {
   ArrowLeft,
+  BellRing,
   CheckCircle2,
   Crown,
   Edit3,
   ExternalLink,
   FolderTree,
   LayoutList,
+  LogOut,
+  Megaphone,
   Newspaper,
   Plus,
   Radio,
@@ -25,9 +28,12 @@ import {
   Trash2,
 } from "lucide-react";
 import type { Article } from "@/domain/entities/article";
+import type { AdBannerData } from "@/domain/entities/banner";
 import type { Category } from "@/domain/entities/category";
+import type { NewsletterSubscriber } from "@/domain/entities/newsletter";
 import type {
   CreateArticleInput,
+  CreateBannerInput,
   CreateCategoryInput,
 } from "@/domain/validation/schemas";
 import {
@@ -35,28 +41,38 @@ import {
   type AdminStats,
 } from "@/components/admin/AdminStatsCards";
 import { ArticleFormModal } from "@/components/admin/ArticleFormModal";
+import { BannerManager } from "@/components/admin/BannerManager";
 import { CategoryManager } from "@/components/admin/CategoryManager";
+import { SubscriberManager } from "@/components/admin/SubscriberManager";
 import { formatNumberPtBr, formatPtBrDateTime } from "@/lib/formatters";
 
 interface AdminDashboardProps {
   initialArticles: Article[];
   initialCategories: Category[];
+  initialBanners: AdBannerData[];
+  initialSubscribers: NewsletterSubscriber[];
   initialStats: AdminStats;
+  adminEmail?: string;
 }
 
-type ActiveTab = "articles" | "categories";
+type ActiveTab = "articles" | "categories" | "banners" | "subscribers";
 
 export function AdminDashboard({
   initialArticles,
   initialCategories,
+  initialBanners,
+  initialSubscribers,
   initialStats,
+  adminEmail,
 }: AdminDashboardProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("articles");
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"all" | "published" | "draft">("all");
+  const [statusFilter, setStatusFilter] = useState<
+    "all" | "published" | "draft"
+  >("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -72,18 +88,18 @@ export function AdminDashboard({
     }, 4000);
   };
 
-  // Query TanStack para artigos + métricas
   const articlesQuery = useQuery<{ articles: Article[]; stats: AdminStats }>({
     queryKey: ["admin-articles"],
     queryFn: async () => {
-      const res = await fetch("/api/articles?status=all&limit=200&includeStats=true");
+      const res = await fetch(
+        "/api/articles?status=all&limit=200&includeStats=true"
+      );
       if (!res.ok) throw new Error("Falha ao carregar notícias.");
       return (await res.json()) as { articles: Article[]; stats: AdminStats };
     },
     initialData: { articles: initialArticles, stats: initialStats },
   });
 
-  // Query TanStack para editorias/categorias
   const categoriesQuery = useQuery<{ categories: Category[] }>({
     queryKey: ["admin-categories"],
     queryFn: async () => {
@@ -94,14 +110,38 @@ export function AdminDashboard({
     initialData: { categories: initialCategories },
   });
 
+  const bannersQuery = useQuery<{ banners: AdBannerData[] }>({
+    queryKey: ["admin-banners"],
+    queryFn: async () => {
+      const res = await fetch("/api/banners");
+      if (!res.ok) throw new Error("Falha ao carregar banners.");
+      return (await res.json()) as { banners: AdBannerData[] };
+    },
+    initialData: { banners: initialBanners },
+  });
+
+  const subscribersQuery = useQuery<{ subscribers: NewsletterSubscriber[] }>({
+    queryKey: ["admin-subscribers"],
+    queryFn: async () => {
+      const res = await fetch("/api/newsletter");
+      if (!res.ok) throw new Error("Falha ao carregar inscritos.");
+      return (await res.json()) as { subscribers: NewsletterSubscriber[] };
+    },
+    initialData: { subscribers: initialSubscribers },
+  });
+
   const articles = articlesQuery.data.articles;
   const stats = articlesQuery.data.stats;
   const categories = categoriesQuery.data.categories;
+  const banners = bannersQuery.data.banners;
+  const subscribers = subscribersQuery.data.subscribers;
 
   const invalidateAll = async () => {
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: ["admin-articles"] }),
       queryClient.invalidateQueries({ queryKey: ["admin-categories"] }),
+      queryClient.invalidateQueries({ queryKey: ["admin-banners"] }),
+      queryClient.invalidateQueries({ queryKey: ["admin-subscribers"] }),
       queryClient.invalidateQueries({ queryKey: ["breaking-news-ticker"] }),
     ]);
     router.refresh();
@@ -133,7 +173,7 @@ export function AdminDashboard({
       setModalError(null);
       showToast(
         variables.id
-          ? "Matéria atualizada com sucesso!"
+          ? "Matéria atualizada com sucesso no Supabase!"
           : "Nova matéria publicada no portal!"
       );
     },
@@ -176,7 +216,7 @@ export function AdminDashboard({
     onSuccess: async () => {
       setConfirmDeleteId(null);
       await invalidateAll();
-      showToast("Notícia removida do banco de dados.");
+      showToast("Notícia removida do Supabase.");
     },
   });
 
@@ -226,6 +266,69 @@ export function AdminDashboard({
     },
   });
 
+  const createBannerMutation = useMutation({
+    mutationFn: async (payload: CreateBannerInput) => {
+      const res = await fetch("/api/banners", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = (await res.json()) as { error?: string };
+      if (!res.ok) throw new Error(json.error ?? "Erro ao criar banner.");
+    },
+    onSuccess: async () => {
+      await invalidateAll();
+      showToast("Banner institucional cadastrado!");
+    },
+  });
+
+  const updateBannerMutation = useMutation({
+    mutationFn: async (
+      payload: Partial<CreateBannerInput> & { id: string }
+    ) => {
+      const res = await fetch(`/api/banners/${payload.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = (await res.json()) as { error?: string };
+      if (!res.ok) throw new Error(json.error ?? "Erro ao atualizar banner.");
+    },
+    onSuccess: async () => {
+      await invalidateAll();
+      showToast("Banner atualizado!");
+    },
+  });
+
+  const deleteBannerMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await fetch(`/api/banners/${id}`, { method: "DELETE" });
+      const json = (await res.json()) as { error?: string };
+      if (!res.ok) throw new Error(json.error ?? "Erro ao excluir banner.");
+    },
+    onSuccess: async () => {
+      await invalidateAll();
+      showToast("Banner removido.");
+    },
+  });
+
+  const deleteSubscriberMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await fetch(`/api/newsletter/${id}`, { method: "DELETE" });
+      const json = (await res.json()) as { error?: string };
+      if (!res.ok) throw new Error(json.error ?? "Erro ao remover inscrito.");
+    },
+    onSuccess: async () => {
+      await invalidateAll();
+      showToast("Inscrito removido da lista.");
+    },
+  });
+
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    router.refresh();
+  };
+
   const filteredArticles = useMemo(() => {
     const q = search.trim().toLowerCase();
     return articles.filter((art) => {
@@ -257,7 +360,6 @@ export function AdminDashboard({
 
   return (
     <div className="min-h-screen bg-slate-100 pb-16">
-      {/* Barra Superior do Painel Admin */}
       <header className="border-b border-slate-200 bg-white shadow-2xs">
         <div className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <div className="flex items-center gap-3">
@@ -273,16 +375,17 @@ export function AdminDashboard({
                 Painel Administrativo — BA Infoco
               </h1>
               <p className="text-xs text-slate-500">
-                CMS Editorial completo: publique notícias, gerencie editorias e defina destaques em tempo real.
+                Conectado ao Supabase PostgreSQL & Storage
+                {adminEmail ? ` • ${adminEmail}` : ""}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2">
             <Link
               href="/"
               target="_blank"
-              className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50"
+              className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50"
             >
               <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
               Abrir Capa
@@ -295,27 +398,38 @@ export function AdminDashboard({
               <Plus className="h-4 w-4" aria-hidden="true" />
               Nova Notícia
             </button>
+            {adminEmail && (
+              <button
+                type="button"
+                onClick={handleLogout}
+                title="Encerrar sessão administrativa"
+                className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-600 hover:border-red-300 hover:bg-red-50 hover:text-red-700"
+              >
+                <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
+                Sair
+              </button>
+            )}
           </div>
         </div>
       </header>
 
       <main className="mx-auto mt-6 max-w-[1280px] space-y-6 px-4 sm:px-6">
-        {/* Toast de feedback */}
         {toast && (
           <div
             role="status"
             aria-live="polite"
             className="flex items-center gap-2 rounded-md border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900 shadow-xs"
           >
-            <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" aria-hidden="true" />
+            <CheckCircle2
+              className="h-4 w-4 shrink-0 text-emerald-600"
+              aria-hidden="true"
+            />
             <span>{toast}</span>
           </div>
         )}
 
-        {/* KPIs em Tempo Real */}
         <AdminStatsCards stats={stats} />
 
-        {/* Navegação por Abas */}
         <div
           role="tablist"
           aria-label="Seções do painel administrativo"
@@ -333,7 +447,7 @@ export function AdminDashboard({
             }`}
           >
             <Newspaper className="h-4 w-4" aria-hidden="true" />
-            Gerenciar Notícias ({articles.length})
+            Notícias ({articles.length})
           </button>
 
           <button
@@ -348,17 +462,45 @@ export function AdminDashboard({
             }`}
           >
             <FolderTree className="h-4 w-4" aria-hidden="true" />
-            Editorias / Categorias ({categories.length})
+            Editorias ({categories.length})
+          </button>
+
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "banners"}
+            onClick={() => setActiveTab("banners")}
+            className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-bold transition ${
+              activeTab === "banners"
+                ? "bg-[#05226B] text-white shadow-xs"
+                : "bg-white text-slate-700 hover:bg-slate-200/70"
+            }`}
+          >
+            <Megaphone className="h-4 w-4" aria-hidden="true" />
+            Banners ({banners.length})
+          </button>
+
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "subscribers"}
+            onClick={() => setActiveTab("subscribers")}
+            className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-bold transition ${
+              activeTab === "subscribers"
+                ? "bg-[#05226B] text-white shadow-xs"
+                : "bg-white text-slate-700 hover:bg-slate-200/70"
+            }`}
+          >
+            <BellRing className="h-4 w-4" aria-hidden="true" />
+            Inscritos ({subscribers.length})
           </button>
         </div>
 
-        {/* Conteúdo da Aba Notícias */}
-        {activeTab === "articles" ? (
+        {activeTab === "articles" && (
           <section
             aria-label="Listagem e gerenciamento de notícias"
             className="rounded-md border border-slate-200 bg-white shadow-2xs"
           >
-            {/* Barra de Filtros */}
             <div className="flex flex-col gap-3 border-b border-slate-200 p-4 md:flex-row md:items-center md:justify-between">
               <div className="relative flex-1">
                 <Search
@@ -407,7 +549,6 @@ export function AdminDashboard({
               </div>
             </div>
 
-            {/* Tabela Responsiva de Matérias */}
             {filteredArticles.length === 0 ? (
               <div className="flex flex-col items-center justify-center px-4 py-14 text-center">
                 <LayoutList
@@ -646,7 +787,9 @@ export function AdminDashboard({
               </div>
             )}
           </section>
-        ) : (
+        )}
+
+        {activeTab === "categories" && (
           <CategoryManager
             categories={categories}
             isMutating={
@@ -659,9 +802,29 @@ export function AdminDashboard({
             onDelete={(id) => deleteCategoryMutation.mutateAsync(id)}
           />
         )}
+
+        {activeTab === "banners" && (
+          <BannerManager
+            banners={banners}
+            isMutating={
+              createBannerMutation.isPending ||
+              updateBannerMutation.isPending ||
+              deleteBannerMutation.isPending
+            }
+            onCreate={(payload) => createBannerMutation.mutateAsync(payload)}
+            onUpdate={(payload) => updateBannerMutation.mutateAsync(payload)}
+            onDelete={(id) => deleteBannerMutation.mutateAsync(id)}
+          />
+        )}
+
+        {activeTab === "subscribers" && (
+          <SubscriberManager
+            subscribers={subscribers}
+            onDelete={(id) => deleteSubscriberMutation.mutateAsync(id)}
+          />
+        )}
       </main>
 
-      {/* Modal de Criação / Edição de Notícia */}
       {modalOpen && (
         <ArticleFormModal
           key={editingArticle?.id ?? "new-article"}
@@ -683,4 +846,3 @@ export function AdminDashboard({
     </div>
   );
 }
-

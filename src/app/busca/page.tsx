@@ -21,11 +21,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const query = params.q?.trim() ?? "";
   const categorySlug = params.categoria?.trim() ?? "";
 
-  const menuCategories = portalService.getMenuCategories();
-  const initialArticles = portalService.searchPublishedArticles(
-    query,
-    categorySlug || undefined
-  );
+  const [menuCategories, initialArticles] = await Promise.all([
+    portalService.getMenuCategories(),
+    portalService.searchPublishedArticles(query, categorySlug || undefined),
+  ]);
 
   return (
     <>
@@ -55,4 +54,3 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     </>
   );
 }
-

@@ -1,7 +1,10 @@
 import crypto from "node:crypto";
-import fs from "node:fs/promises";
-import path from "node:path";
 import { NextResponse, type NextRequest } from "next/server";
+import { getAdminSessionContext } from "@/infrastructure/supabase/auth-cookies";
+import {
+  createSupabaseAdminClient,
+  translateSupabaseError,
+} from "@/infrastructure/supabase/client";
 
 const ALLOWED_TYPES: Record<string, string> = {
   "image/jpeg": ".jpg",
@@ -12,8 +15,17 @@ const ALLOWED_TYPES: Record<string, string> = {
 };
 
 const MAX_BYTES = 5 * 1024 * 1024; // 5 MB
+const STORAGE_BUCKET = "news-media";
 
 export async function POST(request: NextRequest) {
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return NextResponse.json(
+      { error: "Autenticação administrativa necessária para enviar imagens." },
+      { status: 401 }
+    );
+  }
+
   try {
     const formData = await request.formData();
     const file = formData.get("file");
@@ -40,17 +52,36 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
-    await fs.mkdir(uploadDir, { recursive: true });
-
-    const filename = `news-${Date.now()}-${crypto.randomBytes(4).toString("hex")}${ext}`;
-    const targetPath = path.join(uploadDir, filename);
-
+    const filename = `covers/news-${Date.now()}-${crypto.randomBytes(4).toString("hex")}${ext}`;
     const buffer = Buffer.from(await file.arrayBuffer());
-    await fs.writeFile(targetPath, buffer);
+
+    const supabase = createSupabaseAdminClient(session.accessToken);
+    const { error: uploadError } = await supabase.storage
+      .from(STORAGE_BUCKET)
+      .upload(filename, buffer, {
+        contentType: file.type,
+        cacheControl: "31536000",
+        upsert: false,
+      });
+
+    if (uploadError) {
+      return NextResponse.json(
+        {
+          error: translateSupabaseError(
+            uploadError,
+            "Falha ao enviar imagem para o bucket 'news-media' no Supabase Storage."
+          ),
+        },
+        { status: 400 }
+      );
+    }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filename);
 
     return NextResponse.json(
-      { url: `/uploads/${filename}`, filename },
+      { url: publicUrl, filename },
       { status: 201 }
     );
   } catch (error) {
@@ -65,4 +96,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

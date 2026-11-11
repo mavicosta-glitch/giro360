@@ -1,47 +1,64 @@
 import type { Article, PortalHomeData } from "@/domain/entities/article";
 import type { Category } from "@/domain/entities/category";
-import { ensureSeeded } from "@/infrastructure/db/seed";
 import { articleRepository } from "@/infrastructure/repositories/article-repository";
+import { bannerRepository } from "@/infrastructure/repositories/banner-repository";
 import { categoryRepository } from "@/infrastructure/repositories/category-repository";
+import { newsletterRepository } from "@/infrastructure/repositories/newsletter-repository";
 
 export const PORTAL_CACHE_TAG = "portal-content";
 
 export class PortalService {
-  private init(): void {
-    ensureSeeded();
-  }
-
-  getMenuCategories(): Array<{
-    id: string;
-    name: string;
-    slug: string;
-    color: string;
-  }> {
-    this.init();
-    return categoryRepository
-      .findAll({ showInMenuOnly: true })
-      .map((cat) => ({
-        id: cat.id,
-        name: cat.name,
-        slug: cat.slug,
-        color: cat.color,
-      }));
-  }
-
-  getAllCategories(includeCounts = true): Category[] {
-    this.init();
-    return categoryRepository.findAll({ includeCounts });
-  }
-
-  getHomeData(): PortalHomeData {
-    this.init();
-    const menuCategories = this.getMenuCategories();
-
-    const published = articleRepository.findAll({
-      status: "published",
-      limit: 60,
-      orderBy: "publishedAt",
+  async getMenuCategories(): Promise<
+    Array<{
+      id: string;
+      name: string;
+      slug: string;
+      color: string;
+    }>
+  > {
+    const categories = await categoryRepository.findAll({
+      showInMenuOnly: true,
     });
+    return categories.map((cat) => ({
+      id: cat.id,
+      name: cat.name,
+      slug: cat.slug,
+      color: cat.color,
+    }));
+  }
+
+  async getAllCategories(
+    includeCounts = true,
+    accessToken?: string
+  ): Promise<Category[]> {
+    return categoryRepository.findAll({ includeCounts }, accessToken);
+  }
+
+  async getHomeData(): Promise<PortalHomeData> {
+    const [allCategories, published, mostRead, activeBanners] =
+      await Promise.all([
+        categoryRepository.findAll(),
+        articleRepository.findAll({
+          status: "published",
+          limit: 60,
+          orderBy: "publishedAt",
+        }),
+        articleRepository.findAll({
+          status: "published",
+          limit: 5,
+          orderBy: "views",
+        }),
+        bannerRepository.findAll({ activeOnly: true }),
+      ]);
+
+    const menuCategories = allCategories
+      .filter((c) => c.showInMenu)
+      .map((c) => ({
+        id: c.id,
+        name: c.name,
+        slug: c.slug,
+        color: c.color,
+      }));
 
     const explicitHero = published.find((item) => item.isHero) ?? null;
     const heroArticle = explicitHero ?? published[0] ?? null;
@@ -68,12 +85,6 @@ export class PortalService {
     const breakingNews =
       explicitBreaking.length > 0 ? explicitBreaking : published.slice(0, 4);
 
-    const mostRead = articleRepository.findAll({
-      status: "published",
-      limit: 5,
-      orderBy: "views",
-    });
-
     const featuredCategorySlugs = [
       "bahia",
       "economia",
@@ -82,7 +93,6 @@ export class PortalService {
       "policia",
       "brasil",
     ];
-    const allCategories = categoryRepository.findAll();
     const categorySections: PortalHomeData["categorySections"] = [];
 
     for (const slug of featuredCategorySlugs) {
@@ -104,6 +114,12 @@ export class PortalService {
       }
     }
 
+    const leaderboardBanner =
+      activeBanners.find((b) => b.variant === "leaderboard") ?? null;
+    const sidebarBanners = activeBanners.filter(
+      (b) => b.variant !== "leaderboard"
+    );
+
     return {
       heroArticle,
       secondaryFeatured,
@@ -112,97 +128,112 @@ export class PortalService {
       mostRead,
       categorySections,
       menuCategories,
+      leaderboardBanner,
+      sidebarBanners,
     };
   }
 
-  getArticleDetail(
+  async getArticleDetail(
     slug: string,
     incrementView = true
-  ): {
+  ): Promise<{
     article: Article;
     related: Article[];
     mostRead: Article[];
-    menuCategories: ReturnType<PortalService["getMenuCategories"]>;
-  } | null {
-    this.init();
-    const article = articleRepository.findBySlug(slug);
+    menuCategories: Awaited<ReturnType<PortalService["getMenuCategories"]>>;
+    sidebarBanners: Awaited<ReturnType<typeof bannerRepository.findAll>>;
+  } | null> {
+    const article = await articleRepository.findBySlug(slug);
     if (!article || article.status !== "published") {
       return null;
     }
 
     if (incrementView) {
-      articleRepository.incrementViews(article.id);
+      await articleRepository.incrementViewsBySlug(article.slug);
       article.views += 1;
     }
 
-    const sameCategory = articleRepository
-      .findAll({
-        status: "published",
-        categoryId: article.categoryId,
-        limit: 5,
-      })
-      .filter((item) => item.id !== article.id);
+    const [sameCatRaw, recentRaw, mostRead, menuCategories, activeBanners] =
+      await Promise.all([
+        articleRepository.findAll({
+          status: "published",
+          categoryId: article.categoryId,
+          limit: 5,
+        }),
+        articleRepository.findAll({ status: "published", limit: 6 }),
+        articleRepository.findAll({
+          status: "published",
+          limit: 5,
+          orderBy: "views",
+        }),
+        this.getMenuCategories(),
+        bannerRepository.findAll({ activeOnly: true }),
+      ]);
 
+    const sameCategory = sameCatRaw.filter((item) => item.id !== article.id);
     const fallbackRelated =
       sameCategory.length < 3
-        ? articleRepository
-            .findAll({ status: "published", limit: 6 })
-            .filter(
-              (item) =>
-                item.id !== article.id &&
-                !sameCategory.some((rel) => rel.id === item.id)
-            )
+        ? recentRaw.filter(
+            (item) =>
+              item.id !== article.id &&
+              !sameCategory.some((rel) => rel.id === item.id)
+          )
         : [];
 
     const related = [...sameCategory, ...fallbackRelated].slice(0, 3);
-
-    const mostRead = articleRepository.findAll({
-      status: "published",
-      limit: 5,
-      orderBy: "views",
-    });
+    const sidebarBanners = activeBanners.filter(
+      (b) => b.variant !== "leaderboard"
+    );
 
     return {
       article,
       related,
       mostRead,
-      menuCategories: this.getMenuCategories(),
+      menuCategories,
+      sidebarBanners,
     };
   }
 
-  getCategoryPageData(slug: string): {
+  async getCategoryPageData(slug: string): Promise<{
     category: Category;
     articles: Article[];
     mostRead: Article[];
-    menuCategories: ReturnType<PortalService["getMenuCategories"]>;
-  } | null {
-    this.init();
-    const category = categoryRepository.findBySlug(slug);
+    menuCategories: Awaited<ReturnType<PortalService["getMenuCategories"]>>;
+    sidebarBanners: Awaited<ReturnType<typeof bannerRepository.findAll>>;
+  } | null> {
+    const category = await categoryRepository.findBySlug(slug);
     if (!category) return null;
 
-    const articles = articleRepository.findAll({
-      status: "published",
-      categoryId: category.id,
-      limit: 40,
-      orderBy: "publishedAt",
-    });
-
-    const mostRead = articleRepository.findAll({
-      status: "published",
-      limit: 5,
-      orderBy: "views",
-    });
+    const [articles, mostRead, menuCategories, activeBanners] =
+      await Promise.all([
+        articleRepository.findAll({
+          status: "published",
+          categoryId: category.id,
+          limit: 40,
+          orderBy: "publishedAt",
+        }),
+        articleRepository.findAll({
+          status: "published",
+          limit: 5,
+          orderBy: "views",
+        }),
+        this.getMenuCategories(),
+        bannerRepository.findAll({ activeOnly: true }),
+      ]);
 
     return {
       category,
       articles,
       mostRead,
-      menuCategories: this.getMenuCategories(),
+      menuCategories,
+      sidebarBanners: activeBanners.filter((b) => b.variant !== "leaderboard"),
     };
   }
 
-  searchPublishedArticles(query: string, categorySlug?: string): Article[] {
-    this.init();
+  async searchPublishedArticles(
+    query: string,
+    categorySlug?: string
+  ): Promise<Article[]> {
     return articleRepository.findAll({
       status: "published",
       search: query,
@@ -212,23 +243,31 @@ export class PortalService {
     });
   }
 
-  getAdminDashboardData() {
-    this.init();
-    const articles = articleRepository.findAll({
-      status: "all",
-      limit: 200,
-      orderBy: "updatedAt",
-    });
-    const categories = categoryRepository.findAll({ includeCounts: true });
-    const stats = articleRepository.getStats();
+  async getAdminDashboardData(accessToken?: string) {
+    const [articles, categories, banners, subscribers, stats] =
+      await Promise.all([
+        articleRepository.findAll(
+          {
+            status: "all",
+            limit: 200,
+            orderBy: "updatedAt",
+          },
+          accessToken
+        ),
+        categoryRepository.findAll({ includeCounts: true }, accessToken),
+        bannerRepository.findAll(undefined, accessToken),
+        newsletterRepository.findAll(accessToken),
+        articleRepository.getStats(accessToken),
+      ]);
 
     return {
       articles,
       categories,
+      banners,
+      subscribers,
       stats,
     };
   }
 }
 
 export const portalService = new PortalService();
-

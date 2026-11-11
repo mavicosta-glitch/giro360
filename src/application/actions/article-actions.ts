@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePortalCache } from "@/application/actions/revalidate-portal";
 import type { Article } from "@/domain/entities/article";
 import {
   createArticleSchema,
@@ -7,9 +8,8 @@ import {
   type CreateArticleInput,
   type UpdateArticleInput,
 } from "@/domain/validation/schemas";
-import { revalidatePortalCache } from "@/application/actions/revalidate-portal";
-import { ensureSeeded } from "@/infrastructure/db/seed";
 import { articleRepository } from "@/infrastructure/repositories/article-repository";
+import { getAdminSessionContext } from "@/infrastructure/supabase/auth-cookies";
 
 export type ActionResult<T> =
   | { ok: true; data: T }
@@ -18,7 +18,14 @@ export type ActionResult<T> =
 export async function createArticleAction(
   input: CreateArticleInput
 ): Promise<ActionResult<Article>> {
-  ensureSeeded();
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return {
+      ok: false,
+      error: "Acesso administrativo necessário para criar notícias.",
+    };
+  }
+
   const parsed = createArticleSchema.safeParse(input);
   if (!parsed.success) {
     return {
@@ -29,7 +36,10 @@ export async function createArticleAction(
   }
 
   try {
-    const created = articleRepository.create(parsed.data);
+    const created = await articleRepository.create(
+      parsed.data,
+      session.accessToken
+    );
     revalidatePortalCache([
       `/noticia/${created.slug}`,
       `/categoria/${created.categorySlug}`,
@@ -49,7 +59,14 @@ export async function createArticleAction(
 export async function updateArticleAction(
   input: UpdateArticleInput
 ): Promise<ActionResult<Article>> {
-  ensureSeeded();
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return {
+      ok: false,
+      error: "Acesso administrativo necessário para atualizar notícias.",
+    };
+  }
+
   const parsed = updateArticleSchema.safeParse(input);
   if (!parsed.success) {
     return {
@@ -61,7 +78,10 @@ export async function updateArticleAction(
   }
 
   try {
-    const updated = articleRepository.update(parsed.data);
+    const updated = await articleRepository.update(
+      parsed.data,
+      session.accessToken
+    );
     revalidatePortalCache([
       `/noticia/${updated.slug}`,
       `/categoria/${updated.categorySlug}`,
@@ -81,14 +101,21 @@ export async function updateArticleAction(
 export async function deleteArticleAction(
   id: string
 ): Promise<ActionResult<{ id: string }>> {
-  ensureSeeded();
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return {
+      ok: false,
+      error: "Acesso administrativo necessário para excluir notícias.",
+    };
+  }
+
   if (!id.trim()) {
     return { ok: false, error: "ID da notícia inválido." };
   }
 
   try {
-    const existing = articleRepository.findById(id);
-    articleRepository.delete(id);
+    const existing = await articleRepository.findById(id, session.accessToken);
+    await articleRepository.delete(id, session.accessToken);
     revalidatePortalCache(
       existing
         ? [`/noticia/${existing.slug}`, `/categoria/${existing.categorySlug}`]
@@ -105,4 +132,3 @@ export async function deleteArticleAction(
     };
   }
 }
-

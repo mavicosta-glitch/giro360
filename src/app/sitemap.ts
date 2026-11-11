@@ -5,13 +5,15 @@ import { SITE_CONFIG } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const categories = portalService.getAllCategories(false);
-  const articles = articleRepository.findAll({
-    status: "published",
-    limit: 500,
-    orderBy: "publishedAt",
-  });
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [categories, articles] = await Promise.all([
+    portalService.getAllCategories(false),
+    articleRepository.findAll({
+      status: "published",
+      limit: 500,
+      orderBy: "publishedAt",
+    }),
+  ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -44,4 +46,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...staticRoutes, ...categoryRoutes, ...articleRoutes];
 }
-

@@ -6,8 +6,11 @@ import {
   slugify,
 } from "../src/lib/formatters.ts";
 import {
+  adminAuthSchema,
   createArticleSchema,
+  createBannerSchema,
   createCategorySchema,
+  newsletterSchema,
 } from "../src/domain/validation/schemas.ts";
 
 test("slugify removes accents, punctuation and normalizes whitespace", () => {
@@ -73,5 +76,56 @@ test("createArticleSchema validates mandatory SEO and content fields", () => {
     authorName: "Redação",
   });
   assert.equal(missingAlt.success, false);
+});
+
+test("createBannerSchema validates banner variant, theme and href", () => {
+  const valid = createBannerSchema.safeParse({
+    advertiser: "Prefeitura de Salvador",
+    headline: "E muito mais!",
+    subheadline: "Obras de mobilidade na capital baiana.",
+    href: "https://www.salvador.ba.gov.br",
+    variant: "leaderboard",
+    theme: "salvador-blue",
+    isActive: true,
+    displayOrder: 1,
+  });
+  assert.equal(valid.success, true);
+
+  const invalidHref = createBannerSchema.safeParse({
+    advertiser: "Anunciante",
+    headline: "Campanha",
+    href: "javascript:alert(1)",
+    variant: "rectangle",
+    theme: "salvador-blue",
+  });
+  assert.equal(invalidHref.success, false);
+});
+
+test("newsletterSchema normalizes and validates subscriber email", () => {
+  const valid = newsletterSchema.safeParse({
+    email: "  Leitor@BAInfoco.com.br ",
+  });
+  assert.equal(valid.success, true);
+  if (valid.success) {
+    assert.equal(valid.data.email, "leitor@bainfoco.com.br");
+  }
+
+  const invalid = newsletterSchema.safeParse({ email: "email-invalido" });
+  assert.equal(invalid.success, false);
+});
+
+test("adminAuthSchema requires valid email and minimum 6-char password", () => {
+  const valid = adminAuthSchema.safeParse({
+    email: "editor@bainfoco.com.br",
+    password: "secretpassword",
+    fullName: "Editor Chefe",
+  });
+  assert.equal(valid.success, true);
+
+  const shortPassword = adminAuthSchema.safeParse({
+    email: "editor@bainfoco.com.br",
+    password: "123",
+  });
+  assert.equal(shortPassword.success, false);
 });
 

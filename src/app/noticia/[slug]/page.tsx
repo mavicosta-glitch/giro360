@@ -30,7 +30,7 @@ export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const detail = portalService.getArticleDetail(slug, false);
+  const detail = await portalService.getArticleDetail(slug, false);
   if (!detail) {
     return {
       title: "Matéria não encontrada",
@@ -73,12 +73,12 @@ export async function generateMetadata({
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const detail = portalService.getArticleDetail(slug, true);
+  const detail = await portalService.getArticleDetail(slug, true);
   if (!detail) {
     notFound();
   }
 
-  const { article, related, mostRead, menuCategories } = detail;
+  const { article, related, mostRead, menuCategories, sidebarBanners } = detail;
 
   const newsArticleJsonLd = buildNewsArticleJsonLd(article);
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
@@ -247,6 +247,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <SidebarWidgets
                 mostRead={mostRead}
                 categories={menuCategories}
+                banners={sidebarBanners}
                 showTopBanner
               />
             </div>

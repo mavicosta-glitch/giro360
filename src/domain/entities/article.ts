@@ -1,3 +1,5 @@
+import type { AdBannerData } from "@/domain/entities/banner";
+
 export type ArticleStatus = "published" | "draft";
 
 /**
@@ -87,5 +89,7 @@ export interface PortalHomeData {
     slug: string;
     color: string;
   }>;
+  leaderboardBanner?: AdBannerData | null;
+  sidebarBanners?: AdBannerData[];
 }
 

@@ -4,8 +4,15 @@ import { portalService } from "@/application/services/portal-service";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 
-export default function NotFoundPage() {
-  const menuCategories = portalService.getMenuCategories();
+export default async function NotFoundPage() {
+  let menuCategories: Awaited<
+    ReturnType<typeof portalService.getMenuCategories>
+  > = [];
+  try {
+    menuCategories = await portalService.getMenuCategories();
+  } catch {
+    menuCategories = [];
+  }
 
   return (
     <>
@@ -44,4 +51,3 @@ export default function NotFoundPage() {
     </>
   );
 }
-

@@ -20,7 +20,7 @@ export async function generateMetadata({
   params,
 }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const data = portalService.getCategoryPageData(slug);
+  const data = await portalService.getCategoryPageData(slug);
   if (!data) {
     return {
       title: "Editoria não encontrada",
@@ -48,12 +48,12 @@ export async function generateMetadata({
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
-  const data = portalService.getCategoryPageData(slug);
+  const data = await portalService.getCategoryPageData(slug);
   if (!data) {
     notFound();
   }
 
-  const { category, articles, mostRead, menuCategories } = data;
+  const { category, articles, mostRead, menuCategories, sidebarBanners } = data;
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", path: "/" },
@@ -148,6 +148,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <SidebarWidgets
                 mostRead={mostRead}
                 categories={menuCategories}
+                banners={sidebarBanners}
                 showTopBanner
               />
             </div>

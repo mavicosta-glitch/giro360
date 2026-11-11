@@ -1,9 +1,18 @@
 import type { Article } from "@/domain/entities/article";
 
+const resolvedSiteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL.trim()}`
+    : "") ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL.trim()}` : "") ||
+  "http://localhost:3000"
+).replace(/\/+$/, "");
+
 export const SITE_CONFIG = {
   name: "BA Infoco",
   tagline: "Informação em Tempo Real — Bahia, Brasil e Mundo",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  url: resolvedSiteUrl,
   locale: "pt_BR",
   language: "pt-BR",
   publisherEmail: "redacao@bainfoco.com.br",

@@ -1,5 +1,7 @@
 "use server";
 
+import type { ActionResult } from "@/application/actions/article-actions";
+import { revalidatePortalCache } from "@/application/actions/revalidate-portal";
 import type { Category } from "@/domain/entities/category";
 import {
   createCategorySchema,
@@ -7,15 +9,20 @@ import {
   type CreateCategoryInput,
   type UpdateCategoryInput,
 } from "@/domain/validation/schemas";
-import type { ActionResult } from "@/application/actions/article-actions";
-import { revalidatePortalCache } from "@/application/actions/revalidate-portal";
-import { ensureSeeded } from "@/infrastructure/db/seed";
 import { categoryRepository } from "@/infrastructure/repositories/category-repository";
+import { getAdminSessionContext } from "@/infrastructure/supabase/auth-cookies";
 
 export async function createCategoryAction(
   input: CreateCategoryInput
 ): Promise<ActionResult<Category>> {
-  ensureSeeded();
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return {
+      ok: false,
+      error: "Acesso administrativo necessário para criar editorias.",
+    };
+  }
+
   const parsed = createCategorySchema.safeParse(input);
   if (!parsed.success) {
     return {
@@ -27,7 +34,10 @@ export async function createCategoryAction(
   }
 
   try {
-    const created = categoryRepository.create(parsed.data);
+    const created = await categoryRepository.create(
+      parsed.data,
+      session.accessToken
+    );
     revalidatePortalCache([`/categoria/${created.slug}`]);
     return { ok: true, data: created };
   } catch (error) {
@@ -44,7 +54,14 @@ export async function createCategoryAction(
 export async function updateCategoryAction(
   input: UpdateCategoryInput
 ): Promise<ActionResult<Category>> {
-  ensureSeeded();
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return {
+      ok: false,
+      error: "Acesso administrativo necessário para atualizar editorias.",
+    };
+  }
+
   const parsed = updateCategorySchema.safeParse(input);
   if (!parsed.success) {
     return {
@@ -56,7 +73,10 @@ export async function updateCategoryAction(
   }
 
   try {
-    const updated = categoryRepository.update(parsed.data);
+    const updated = await categoryRepository.update(
+      parsed.data,
+      session.accessToken
+    );
     revalidatePortalCache([`/categoria/${updated.slug}`]);
     return { ok: true, data: updated };
   } catch (error) {
@@ -73,14 +93,21 @@ export async function updateCategoryAction(
 export async function deleteCategoryAction(
   id: string
 ): Promise<ActionResult<{ id: string }>> {
-  ensureSeeded();
+  const session = await getAdminSessionContext();
+  if (!session.isAdmin) {
+    return {
+      ok: false,
+      error: "Acesso administrativo necessário para excluir editorias.",
+    };
+  }
+
   if (!id.trim()) {
     return { ok: false, error: "ID da editoria inválido." };
   }
 
   try {
-    const existing = categoryRepository.findById(id);
-    categoryRepository.delete(id);
+    const existing = await categoryRepository.findById(id, session.accessToken);
+    await categoryRepository.delete(id, session.accessToken);
     revalidatePortalCache(
       existing ? [`/categoria/${existing.slug}`] : []
     );
@@ -95,4 +122,3 @@ export async function deleteCategoryAction(
     };
   }
 }
-

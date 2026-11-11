@@ -37,9 +37,12 @@ export function NewsGrid({ data }: NewsGridProps) {
     mostRead,
     categorySections,
     menuCategories,
+    leaderboardBanner,
+    sidebarBanners,
   } = data;
 
   const recentFeed = latestNews.slice(0, 6);
+  const topBanner = leaderboardBanner ?? LEADERBOARD_BANNER;
 
   return (
     <div className="mx-auto max-w-[1200px] px-4 pb-12 sm:px-6">
@@ -48,11 +51,29 @@ export function NewsGrid({ data }: NewsGridProps) {
         {/* Coluna Editorial Esquerda / Centro (8/12) */}
         <div className="space-y-8 lg:col-span-8">
           {/* Banner Leaderboard Superior alinhado ao layout de referência */}
-          <AdBanner banner={LEADERBOARD_BANNER} />
+          <AdBanner banner={topBanner} />
 
           {/* Bloco Hero + Coluna Secundária */}
           <section aria-label="Manchete principal e destaques">
             <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
+              {!heroArticle && secondaryFeatured.length === 0 && (
+                <div className="md:col-span-12 rounded-md border border-slate-200 bg-slate-50 p-6 text-center">
+                  <h1 className="font-display text-lg font-black text-[#05226B]">
+                    Portal conectado ao Supabase — aguardando conteúdo inicial
+                  </h1>
+                  <p className="mt-1.5 text-sm text-slate-600">
+                    Execute o script <code className="rounded bg-slate-200 px-1.5 py-0.5 text-xs font-semibold">supabase/schema.sql</code> no Supabase SQL Editor para carregar as editorias e reportagens iniciais ou acesse o painel editorial.
+                  </p>
+                  <Link
+                    href="/admin"
+                    className="mt-4 inline-flex items-center gap-2 rounded-md bg-[#05226B] px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-[#082F8A]"
+                  >
+                    Abrir Painel Admin
+                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </Link>
+                </div>
+              )}
+
               {heroArticle && (
                 <div className="md:col-span-7">
                   <HeroSection article={heroArticle} />
@@ -188,6 +209,7 @@ export function NewsGrid({ data }: NewsGridProps) {
           <SidebarWidgets
             mostRead={mostRead}
             categories={menuCategories}
+            banners={sidebarBanners}
             showTopBanner
           />
         </div>

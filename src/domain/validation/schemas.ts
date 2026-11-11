@@ -90,8 +90,76 @@ export const updateArticleSchema = createArticleSchema.partial().extend({
   id: z.string().trim().min(1, "ID da notícia é obrigatório."),
 });
 
+export const createBannerSchema = z.object({
+  advertiser: z
+    .string()
+    .trim()
+    .min(2, "O nome do anunciante deve ter pelo menos 2 caracteres.")
+    .max(80),
+  headline: z
+    .string()
+    .trim()
+    .min(2, "O título principal do banner é obrigatório.")
+    .max(100),
+  subheadline: z.string().trim().max(140).optional().default(""),
+  ctaLabel: z.string().trim().max(40).optional().default("Saiba mais"),
+  badgeText: z
+    .string()
+    .trim()
+    .max(40)
+    .optional()
+    .default("Publicidade Institucional"),
+  href: z
+    .string()
+    .trim()
+    .min(1, "Informe o link de destino do banner.")
+    .refine(
+      (val) =>
+        val.startsWith("/") ||
+        val.startsWith("https://") ||
+        val.startsWith("http://"),
+      "O link deve iniciar com /, https:// ou http://."
+    ),
+  variant: z.enum(["leaderboard", "rectangle", "sidebar"]).default("rectangle"),
+  theme: z
+    .enum([
+      "salvador-blue",
+      "agro-green",
+      "commerce-gold",
+      "institutional-navy",
+    ])
+    .default("salvador-blue"),
+  isActive: z.boolean().optional().default(true),
+  displayOrder: z.coerce.number().int().min(0).max(999).optional().default(0),
+});
+
+export const updateBannerSchema = createBannerSchema.partial().extend({
+  id: z.string().trim().min(1, "ID do banner é obrigatório."),
+});
+
+export const newsletterSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .email("Informe um endereço de e-mail válido."),
+});
+
+export const adminAuthSchema = z.object({
+  email: z.string().trim().toLowerCase().email("E-mail inválido."),
+  password: z
+    .string()
+    .min(6, "A senha deve ter pelo menos 6 caracteres.")
+    .max(128),
+  fullName: z.string().trim().max(80).optional(),
+});
+
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;
 export type UpdateCategoryInput = z.infer<typeof updateCategorySchema>;
 export type CreateArticleInput = z.infer<typeof createArticleSchema>;
 export type UpdateArticleInput = z.infer<typeof updateArticleSchema>;
+export type CreateBannerInput = z.infer<typeof createBannerSchema>;
+export type UpdateBannerInput = z.infer<typeof updateBannerSchema>;
+export type NewsletterInput = z.infer<typeof newsletterSchema>;
+export type AdminAuthInput = z.infer<typeof adminAuthSchema>;
 
