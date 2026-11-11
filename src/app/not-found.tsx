@@ -1,0 +1,47 @@
+import Link from "next/link";
+import { ArrowLeft, Search } from "lucide-react";
+import { portalService } from "@/application/services/portal-service";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+
+export default function NotFoundPage() {
+  const menuCategories = portalService.getMenuCategories();
+
+  return (
+    <>
+      <Header categories={menuCategories} />
+      <main
+        id="conteudo-principal"
+        className="flex min-h-[60vh] flex-col items-center justify-center bg-white px-4 py-16 text-center"
+      >
+        <span className="rounded-xs bg-[#C80A14] px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-white">
+          Erro 404
+        </span>
+        <h1 className="mt-4 font-display text-3xl font-black text-slate-950 sm:text-4xl">
+          Página ou matéria não encontrada
+        </h1>
+        <p className="mt-2 max-w-md text-sm text-slate-600">
+          O endereço acessado pode ter sido removido ou alterado. Utilize o menu de editorias ou faça uma busca no arquivo.
+        </p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-md bg-[#05226B] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#082F8A]"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            Voltar para a Capa
+          </Link>
+          <Link
+            href="/busca"
+            className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50"
+          >
+            <Search className="h-4 w-4" aria-hidden="true" />
+            Buscar no Portal
+          </Link>
+        </div>
+      </main>
+      <Footer categories={menuCategories} />
+    </>
+  );
+}
+

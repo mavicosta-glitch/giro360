@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Inter", "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-brand-navy: #05226b;
+  --color-brand-navy-dark: #031649;
+  --color-brand-navy-light: #0a349c;
+  --color-brand-red: #c80a14;
+  --color-brand-red-hover: #a60710;
+  --color-surface-muted: #f3f4f6;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: #111827;
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Acessibilidade: destaque nítido para navegação por teclado */
+  :focus-visible {
+    outline: 2px solid #c80a14;
+    outline-offset: 2px;
+  }
+}
+
+/* Scrollbar horizontal fluida para barra de editorias em mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Skip link acessível (visível ao receber foco via Tab) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background-color: #05226b;
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.skip-link:focus {
+  left: 0.75rem;
+  top: 0.75rem;
+  border-radius: 0.375rem;
+}
