@@ -12,3 +12,6 @@ next-env.d.ts
 *.tsbuildinfo
 
 
+
+# Sub-repositório independente de tutoriais
+central-tutoriais/
