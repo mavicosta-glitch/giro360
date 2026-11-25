@@ -6,7 +6,7 @@ interface BrandLogoProps {
 }
 
 /**
- * Logotipo vetorial institucional BA Infoco em SVG inline para carregamento instantâneo (LCP/CLS zero).
+ * Logotipo vetorial institucional Foco Bahia em SVG inline para carregamento instantâneo (LCP/CLS zero).
  */
 export function BrandLogo({ inverted = false, compact = false }: BrandLogoProps) {
   const primaryColor = inverted ? "#FFFFFF" : "#123B50";
@@ -16,17 +16,17 @@ export function BrandLogo({ inverted = false, compact = false }: BrandLogoProps)
   return (
     <Link
       href="/"
-      aria-label="BA Infoco - Página inicial do portal de notícias"
+      aria-label="Foco Bahia - Página inicial do portal de notícias"
       className="inline-flex flex-col items-center justify-center leading-none select-none group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D6A843] rounded"
     >
-      <span className="relative inline-flex items-center">
+      <span className="relative inline-flex items-center gap-1.5">
         {/* Ícone de foco estilizado integrado ao logotipo */}
         <svg
-          width={compact ? 26 : 32}
-          height={compact ? 26 : 32}
+          width={compact ? 24 : 30}
+          height={compact ? 24 : 30}
           viewBox="0 0 36 36"
           aria-hidden="true"
-          className="-mr-2.5 z-10 transition-transform duration-200 group-hover:scale-105"
+          className="shrink-0 transition-transform duration-200 group-hover:scale-105"
         >
           <circle
             cx="18"
@@ -47,24 +47,24 @@ export function BrandLogo({ inverted = false, compact = false }: BrandLogoProps)
           <circle cx="18" cy="18" r="3.5" fill={accentColor} />
         </svg>
         <span
-          className="font-display font-black tracking-tighter"
+          className="font-display font-black tracking-tight"
           style={{
             color: primaryColor,
-            fontSize: compact ? "1.65rem" : "2.15rem",
+            fontSize: compact ? "1.5rem" : "1.95rem",
             lineHeight: 0.9,
           }}
         >
-          BA
+          FOCO
         </span>
       </span>
       <span
-        className="font-display font-extrabold uppercase tracking-[0.22em] mt-0.5"
+        className="font-display font-extrabold uppercase tracking-[0.36em] pl-[0.36em] mt-1"
         style={{
           color: subtitleColor,
           fontSize: compact ? "0.62rem" : "0.75rem",
         }}
       >
-        INFOCO
+        BAHIA
       </span>
     </Link>
   );

@@ -373,7 +373,7 @@ export function AdminDashboard({
             </Link>
             <div>
               <h1 className="font-display text-lg font-black text-[#123B50] sm:text-xl">
-                Painel Administrativo — BA Infoco
+                Painel Administrativo — Foco Bahia
               </h1>
               <p className="text-xs text-[#263746]/70">
                 Conectado ao Supabase PostgreSQL & Storage

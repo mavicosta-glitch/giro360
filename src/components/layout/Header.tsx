@@ -15,7 +15,7 @@ interface HeaderProps {
 }
 
 /**
- * Cabeçalho Institucional BA Infoco:
+ * Cabeçalho Institucional Foco Bahia:
  * - Faixa superior branca com Menu Hambúrguer, Logotipo centralizado, Busca e Acesso Admin.
  * - Faixa secundária em Azul-Petróleo (#123B50) com filete Dourado (#D6A843) e rolagem horizontal fluida em mobile.
  */

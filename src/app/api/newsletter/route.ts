@@ -33,8 +33,8 @@ export async function POST(request: NextRequest) {
         ok: true,
         alreadySubscribed: result.alreadySubscribed,
         message: result.alreadySubscribed
-          ? "Este e-mail já está inscrito no Plantão BA Infoco."
-          : "Inscrição confirmada! Obrigado por acompanhar o BA Infoco.",
+          ? "Este e-mail já está inscrito no Plantão Foco Bahia."
+          : "Inscrição confirmada! Obrigado por acompanhar o Foco Bahia.",
       },
       { status: result.alreadySubscribed ? 200 : 201 }
     );

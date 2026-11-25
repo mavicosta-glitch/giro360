@@ -1,5 +1,5 @@
 -- ============================================================================
--- PORTAL DE NOTÍCIAS BA INFOCO / GIRO360 — SUPABASE FULL SCHEMA + RLS + SEED
+-- PORTAL DE NOTÍCIAS FOCO BAHIA — SUPABASE FULL SCHEMA + RLS + SEED
 -- Execute este script completo no Supabase SQL Editor (pode ser reexecutado).
 -- ============================================================================
 
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS public.ad_banners (
   updated_at timestamptz NOT NULL DEFAULT now()
 );
 
--- Inscritos da Newsletter ("Plantão BA Infoco")
+-- Inscritos da Newsletter ("Plantão Foco Bahia")
 CREATE TABLE IF NOT EXISTS public.newsletter_subscribers (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   email text NOT NULL UNIQUE,
@@ -428,27 +428,27 @@ ON CONFLICT (id) DO UPDATE
       file_size_limit = EXCLUDED.file_size_limit,
       allowed_mime_types = EXCLUDED.allowed_mime_types;
 
-DROP POLICY IF EXISTS "ba_infoco_news_media_public_read" ON storage.objects;
-CREATE POLICY "ba_infoco_news_media_public_read"
+DROP POLICY IF EXISTS "foco_bahia_news_media_public_read" ON storage.objects;
+CREATE POLICY "foco_bahia_news_media_public_read"
   ON storage.objects FOR SELECT
   TO anon, authenticated
   USING (bucket_id = 'news-media');
 
-DROP POLICY IF EXISTS "ba_infoco_news_media_admin_insert" ON storage.objects;
-CREATE POLICY "ba_infoco_news_media_admin_insert"
+DROP POLICY IF EXISTS "foco_bahia_news_media_admin_insert" ON storage.objects;
+CREATE POLICY "foco_bahia_news_media_admin_insert"
   ON storage.objects FOR INSERT
   TO authenticated
   WITH CHECK (bucket_id = 'news-media' AND public.is_admin());
 
-DROP POLICY IF EXISTS "ba_infoco_news_media_admin_update" ON storage.objects;
-CREATE POLICY "ba_infoco_news_media_admin_update"
+DROP POLICY IF EXISTS "foco_bahia_news_media_admin_update" ON storage.objects;
+CREATE POLICY "foco_bahia_news_media_admin_update"
   ON storage.objects FOR UPDATE
   TO authenticated
   USING (bucket_id = 'news-media' AND public.is_admin())
   WITH CHECK (bucket_id = 'news-media' AND public.is_admin());
 
-DROP POLICY IF EXISTS "ba_infoco_news_media_admin_delete" ON storage.objects;
-CREATE POLICY "ba_infoco_news_media_admin_delete"
+DROP POLICY IF EXISTS "foco_bahia_news_media_admin_delete" ON storage.objects;
+CREATE POLICY "foco_bahia_news_media_admin_delete"
   ON storage.objects FOR DELETE
   TO authenticated
   USING (bucket_id = 'news-media' AND public.is_admin());
@@ -527,7 +527,7 @@ VALUES
     E'A travessia marítima entre Salvador e a Ilha de Itaparica opera com esquema reforçado a partir desta semana para atender ao aumento de passageiros entre a capital baiana e o Recôncavo.\n\nDe acordo com a concessionária responsável pelos terminais de São Joaquim e Bom Despacho, seis embarcações estão em operação contínua com saídas a cada 30 minutos nos horários de pico.\n\nOs passageiros também passaram a contar com painel atualizado em tempo real para acompanhar o tempo estimado de espera antes mesmo de chegar ao embarque. A recomendação para motoristas é priorizar a compra antecipada com hora marcada.\n\nEquipes da agência reguladora acompanham a operação e reforçaram a sinalização nos acessos rodoviários da BA-001.',
     '/images/news/bahia-ferry.jpg',
     'Ferry-boat de passageiros navegando pelas águas azuis da Baía de Todos-os-Santos em Salvador',
-    'Embarcações operam com saídas a cada 30 minutos nos picos. Foto: Redação BA Infoco',
+    'Embarcações operam com saídas a cada 30 minutos nos picos. Foto: Redação Foco Bahia',
     (SELECT id FROM public.categories WHERE slug = 'bahia'),
     'Lucas Ferreira',
     'Repórter Salvador',
@@ -670,7 +670,7 @@ VALUES
     'Turismo corporativo e de lazer sustentam alta ocupação. Foto: Setur',
     (SELECT id FROM public.categories WHERE slug = 'hotelaria'),
     'Juliana Costa',
-    'Redação BA Infoco',
+    'Redação Foco Bahia',
     'published',
     false,
     false,
@@ -710,7 +710,7 @@ VALUES
     'Feiras de adoção ocorrem em praças e parques da capital. Foto: Divulgação',
     (SELECT id FROM public.categories WHERE slug = 'animais'),
     'Mariana Oliveira',
-    'Redação BA Infoco',
+    'Redação Foco Bahia',
     'published',
     false,
     false,

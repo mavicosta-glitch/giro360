@@ -51,7 +51,7 @@ export function ArticleFormModal({
   const [coverAlt, setCoverAlt] = useState(article?.coverAlt ?? "");
   const [imageCaption, setImageCaption] = useState(article?.imageCaption ?? "");
   const [authorName, setAuthorName] = useState(
-    article?.authorName ?? "Redação BA Infoco"
+    article?.authorName ?? "Redação Foco Bahia"
   );
   const [authorRole, setAuthorRole] = useState(
     article?.authorRole ?? "Redação"
@@ -348,7 +348,7 @@ export function ArticleFormModal({
                     type="text"
                     value={imageCaption}
                     onChange={(e) => setImageCaption(e.target.value)}
-                    placeholder="Ex: Foto: Redação BA Infoco"
+                    placeholder="Ex: Foto: Redação Foco Bahia"
                     className="mt-1 w-full rounded-md border border-[#123B50]/20 bg-white px-3 py-2 text-xs text-[#263746] focus:border-[#123B50] focus:outline-none"
                   />
                 </div>

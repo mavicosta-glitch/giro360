@@ -58,7 +58,7 @@ test("createArticleSchema validates mandatory SEO and content fields", () => {
     coverImage: "/images/news/bahia-ferry.jpg",
     coverAlt: "Ferry-boat na Baía de Todos-os-Santos em Salvador",
     categoryId: "cat-1",
-    authorName: "Redação BA Infoco",
+    authorName: "Redação Foco Bahia",
     status: "published",
     isHero: true,
     isBreaking: false,
@@ -104,11 +104,11 @@ test("createBannerSchema validates banner variant, theme and href", () => {
 
 test("newsletterSchema normalizes and validates subscriber email", () => {
   const valid = newsletterSchema.safeParse({
-    email: "  Leitor@BAInfoco.com.br ",
+    email: "  Leitor@FocoBahia.com.br ",
   });
   assert.equal(valid.success, true);
   if (valid.success) {
-    assert.equal(valid.data.email, "leitor@bainfoco.com.br");
+    assert.equal(valid.data.email, "leitor@focobahia.com.br");
   }
 
   const invalid = newsletterSchema.safeParse({ email: "email-invalido" });
@@ -117,14 +117,14 @@ test("newsletterSchema normalizes and validates subscriber email", () => {
 
 test("adminAuthSchema requires valid email and minimum 6-char password", () => {
   const valid = adminAuthSchema.safeParse({
-    email: "editor@bainfoco.com.br",
+    email: "editor@focobahia.com.br",
     password: "secretpassword",
     fullName: "Editor Chefe",
   });
   assert.equal(valid.success, true);
 
   const shortPassword = adminAuthSchema.safeParse({
-    email: "editor@bainfoco.com.br",
+    email: "editor@focobahia.com.br",
     password: "123",
   });
   assert.equal(shortPassword.success, false);

@@ -6,31 +6,31 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
   title: {
-    default: "BA Infoco — Notícias da Bahia, Brasil e Mundo em Tempo Real",
-    template: "%s | BA Infoco",
+    default: "Foco Bahia — Notícias da Bahia, Brasil e Mundo em Tempo Real",
+    template: "%s | Foco Bahia",
   },
   description:
     "Portal de notícias regional de alta performance com cobertura completa da Bahia, Salvador, agronegócio, economia, esportes, cultura e segurança.",
   keywords: [
     "notícias da Bahia",
     "Salvador",
-    "BA Infoco",
+    "Foco Bahia",
     "jornalismo regional",
     "economia",
     "esportes",
     "agricultura Bahia",
   ],
-  authors: [{ name: "Redação BA Infoco" }],
+  authors: [{ name: "Redação Foco Bahia" }],
   openGraph: {
     type: "website",
     locale: SITE_CONFIG.locale,
     siteName: SITE_CONFIG.name,
-    title: "BA Infoco — Notícias da Bahia, Brasil e Mundo",
+    title: "Foco Bahia — Notícias da Bahia, Brasil e Mundo",
     description: SITE_CONFIG.tagline,
   },
   twitter: {
     card: "summary_large_image",
-    title: "BA Infoco — Portal de Notícias",
+    title: "Foco Bahia — Portal de Notícias",
     description: SITE_CONFIG.tagline,
   },
   robots: {

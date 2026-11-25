@@ -7,8 +7,8 @@ import {
 } from "@/infrastructure/supabase/client";
 import { getSupabaseConfig } from "@/infrastructure/supabase/config";
 
-export const ACCESS_COOKIE = "ba_admin_access_token";
-export const REFRESH_COOKIE = "ba_admin_refresh_token";
+export const ACCESS_COOKIE = "foco_bahia_admin_access_token";
+export const REFRESH_COOKIE = "foco_bahia_admin_refresh_token";
 
 export interface AdminUserSession {
   id: string;
@@ -62,7 +62,7 @@ export async function getAdminSessionContext(): Promise<AdminSessionContext> {
       needsDbSetup: false,
       user: {
         id: "service-role",
-        email: "admin@bainfoco.com.br",
+        email: "admin@focobahia.com.br",
         fullName: "Administrador (Service Role)",
         role: "admin",
       },

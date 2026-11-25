@@ -1,4 +1,4 @@
-# Giro360 / BA Infoco — Portal de Notícias de Alta Performance
+# Foco Bahia — Portal de Notícias de Alta Performance
 
 Portal de notícias regional construído com **Next.js 16 (App Router)**, **React 19**, **TypeScript**, **Tailwind CSS v4**, **TanStack Query v5**, **Lucide React**, **Zod** e persistência completa em **Supabase** (**PostgreSQL + Row Level Security + Auth + Storage**), incluindo um **Painel Administrativo (`/admin`)** completo para gestão de notícias, editorias, banners publicitários e inscritos na newsletter.
 

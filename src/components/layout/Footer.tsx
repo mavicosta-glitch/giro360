@@ -25,7 +25,7 @@ export function Footer({ categories }: FooterProps) {
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="h-3.5 w-3.5 text-[#D6A843]" aria-hidden="true" />
-                redacao@bainfoco.com.br
+                redacao@focobahia.com.br
               </p>
             </div>
           </div>
@@ -94,7 +94,7 @@ export function Footer({ categories }: FooterProps) {
 
         <div className="mt-8 flex flex-col items-center justify-between gap-2 border-t border-white/15 pt-6 text-[11px] text-[#EAF0F2]/75 sm:flex-row">
           <p>
-            © {new Date().getFullYear()} BA Infoco — Jornalismo Digital de Alta Performance.
+            © {new Date().getFullYear()} Foco Bahia — Jornalismo Digital de Alta Performance.
           </p>
           <p>
             Arquitetura Next.js App Router • Acessibilidade WCAG AA • Schema.org NewsArticle

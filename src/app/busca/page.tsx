@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Buscar Notícias",
   description:
-    "Pesquise no arquivo de reportagens, notícias da Bahia, economia, esportes e editorias do portal BA Infoco.",
+    "Pesquise no arquivo de reportagens, notícias da Bahia, economia, esportes e editorias do portal Foco Bahia.",
 };
 
 interface SearchPageProps {
@@ -37,7 +37,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               Arquivo & Busca de Notícias
             </h1>
             <p className="mt-1 text-sm text-[#263746]/80">
-              Encontre matérias publicadas no portal BA Infoco em tempo real.
+              Encontre matérias publicadas no portal Foco Bahia em tempo real.
             </p>
           </header>
 

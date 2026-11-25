@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 96" role="img" aria-label="Foco Bahia - Portal de Notícias">
+  <rect width="260" height="96" fill="#FFFFFF" rx="8" />
+  <g transform="translate(29, 10)">
+    <circle cx="28" cy="30" r="15" fill="none" stroke="#D6A843" stroke-width="3.8" />
+    <circle cx="28" cy="30" r="9" fill="none" stroke="#123B50" stroke-width="3" />
+    <circle cx="28" cy="30" r="3.8" fill="#D6A843" />
+    <text x="52" y="45" font-family="Arial Black, Impact, sans-serif" font-weight="900" font-size="44" fill="#123B50" letter-spacing="-1">FOCO</text>
+    <text x="104" y="72" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="18" fill="#263746" letter-spacing="6">BAHIA</text>
+  </g>
+</svg>

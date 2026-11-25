@@ -28,7 +28,7 @@ export function SubscriberManager({
             className="flex items-center gap-2 font-display text-base font-black text-[#123B50]"
           >
             <BellRing className="h-4 w-4 text-[#D6A843]" aria-hidden="true" />
-            Inscritos no Plantão BA Infoco ({subscribers.length})
+            Inscritos no Plantão Foco Bahia ({subscribers.length})
           </h2>
           <p className="text-xs text-[#263746]/70">
             Leitores cadastrados via widget da barra lateral com proteção RLS (somente administradores).

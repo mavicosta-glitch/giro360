@@ -39,7 +39,7 @@ export function NewsletterBox() {
         type: "success",
         text:
           json.message ??
-          "Inscrição confirmada! Obrigado por acompanhar o BA Infoco.",
+          "Inscrição confirmada! Obrigado por acompanhar o Foco Bahia.",
       });
       setEmail("");
     } catch {
@@ -63,7 +63,7 @@ export function NewsletterBox() {
           id="newsletter-heading"
           className="font-display text-sm font-extrabold uppercase tracking-wider"
         >
-          Plantão BA Infoco
+          Plantão Foco Bahia
         </h2>
       </div>
       <p className="mt-2 text-xs leading-relaxed text-[#EAF0F2]">

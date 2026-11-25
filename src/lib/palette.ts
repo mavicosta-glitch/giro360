@@ -1,5 +1,5 @@
 /**
- * Paleta oficial do portal BA Infoco / Giro360:
+ * Paleta oficial do portal Foco Bahia:
  * Azul-petróleo + Dourado + Branco + Gelo Azulado + Grafite Azulado.
  */
 export const PORTAL_PALETTE = {

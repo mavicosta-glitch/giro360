@@ -53,7 +53,7 @@ export function AdminStatsCards({ stats }: { stats: AdminStats }) {
     {
       label: "Inscritos",
       value: formatNumberPtBr(stats.totalSubscribers ?? 0),
-      sub: "Plantão BA Infoco",
+      sub: "Plantão Foco Bahia",
       icon: BellRing,
       accent: "text-[#263746] bg-[#EAF0F2] border-[#263746]/20",
     },

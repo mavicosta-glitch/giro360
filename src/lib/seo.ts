@@ -10,12 +10,12 @@ const resolvedSiteUrl = (
 ).replace(/\/+$/, "");
 
 export const SITE_CONFIG = {
-  name: "BA Infoco",
+  name: "Foco Bahia",
   tagline: "Informação em Tempo Real — Bahia, Brasil e Mundo",
   url: resolvedSiteUrl,
   locale: "pt_BR",
   language: "pt-BR",
-  publisherEmail: "redacao@bainfoco.com.br",
+  publisherEmail: "redacao@focobahia.com.br",
   city: "Salvador",
   state: "BA",
   country: "BR",
@@ -35,7 +35,7 @@ export function buildWebSiteJsonLd() {
         url: SITE_CONFIG.url,
         logo: {
           "@type": "ImageObject",
-          url: `${SITE_CONFIG.url}/images/logo-ba-infoco.svg`,
+          url: `${SITE_CONFIG.url}/images/logo-foco-bahia.svg`,
         },
         address: {
           "@type": "PostalAddress",
@@ -108,7 +108,7 @@ export function buildNewsArticleJsonLd(article: Article) {
       url: SITE_CONFIG.url,
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_CONFIG.url}/images/logo-ba-infoco.svg`,
+        url: `${SITE_CONFIG.url}/images/logo-foco-bahia.svg`,
       },
     },
   };

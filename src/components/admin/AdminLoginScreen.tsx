@@ -178,7 +178,7 @@ export function AdminLoginScreen({
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="Ex: Editor-Chefe BA Infoco"
+                placeholder="Ex: Editor-Chefe Foco Bahia"
                 className="mt-1 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
               />
             </div>
@@ -198,7 +198,7 @@ export function AdminLoginScreen({
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@bainfoco.com.br"
+              placeholder="admin@focobahia.com.br"
               className="mt-1 w-full rounded-md border border-[#123B50]/20 px-3 py-2 text-sm text-[#263746] focus:border-[#123B50] focus:outline-none"
             />
           </div>
